@@ -423,7 +423,7 @@ const createProductCategory = (body) => {
     return new Promise(function (resolve, reject) {
         const { name, photo } = body;
         pool.query(
-            "Insert into productCategory (name, photo) values ($1, $2)",
+            "Insert into productCategory (name, photoUrl) values ($1, $2)",
             [name, photo],
             (error, results) => {
                 if (error) {
