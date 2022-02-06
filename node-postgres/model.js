@@ -432,7 +432,7 @@ const createProductCategory = (body) => {
 const createProduct = (body) => {
   return new Promise(function (resolve, reject) {
     const {
-      productId,
+      productid,
       name,
       price,
       qty,
@@ -441,14 +441,14 @@ const createProduct = (body) => {
       photo3,
       photo4,
       photo5,
-      manufactureDate,
-      expirationDate,
-      categoryName,
+      manufacturedate,
+      expirationdate,
+      categoryname,
     } = body;
     pool.query(
-      "Insert into product (productId, name, price, qty, photo1, photo2, photo3, photo4, photo5, manufactureDate, expirationDate, categoryName) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
+      "Insert into product (productid, name, price, qty, photo1, photo2, photo3, photo4, photo5, manufacturedate, expirationdate, categoryname) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
       [
-        productId,
+        productid,
         name,
         price,
         qty,
@@ -457,9 +457,9 @@ const createProduct = (body) => {
         photo3,
         photo4,
         photo5,
-        manufactureDate,
-        expirationDate,
-        categoryName,
+        manufacturedate,
+        expirationdate,
+        categoryname,
       ],
       (error, results) => {
         if (error) {
@@ -477,10 +477,10 @@ const createProduct = (body) => {
 
 const createComment = (body) => {
   return new Promise(function (resolve, reject) {
-    const { commentId, text, time, productId, nationalCode } = body;
+    const { commentid, text, time, productid, nationalcode } = body;
     pool.query(
-      "Insert into product (commentId, text, time, productId, nationalCode) values ($1, $2, $3, $4, $5)",
-      [commentId, text, time, productId, nationalCode],
+      "Insert into comment (commentid, text, time, productid, nationalcode) values ($1, $2, $3, $4, $5)",
+      [commentid, text, time, productid, nationalcode],
       (error, results) => {
         if (error) {
           reject(error);
@@ -612,7 +612,7 @@ const deleteProduct = (productId) => {
 const deleteComment = (commentId) => {
   return new Promise(function (resolve, reject) {
     pool.query(
-      "DELETE FROM Comment WHERE commentId = $1",
+      "DELETE FROM Comment WHERE commentid = $1",
       [commentId],
       (error, results) => {
         if (error) {

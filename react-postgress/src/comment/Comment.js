@@ -80,7 +80,7 @@ export default function Comment() {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button onClick={() => deleteComment(record.name)}>delete</Button>
+        <Button onClick={() => deleteComment(record.commentid)}>delete</Button>
       ),
     },
   ];

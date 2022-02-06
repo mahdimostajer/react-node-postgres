@@ -27,6 +27,11 @@ export default function ProductForm({ onSubmit, initialValues, visible }) {
           </Form.Item>
         </Col>
         <Col span={24}>
+          <Form.Item label="price" name="price">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
           <Form.Item label="qty" name="qty">
             <Input />
           </Form.Item>
