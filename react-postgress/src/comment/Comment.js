@@ -92,7 +92,7 @@ export default function Comment() {
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add product category
+        add comment
       </Button>
       <Modal
         style={{

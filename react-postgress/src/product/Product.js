@@ -122,7 +122,7 @@ export default function Product() {
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add product category
+        add product
       </Button>
       <Modal
         style={{
