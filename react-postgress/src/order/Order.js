@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Table, Modal } from "antd";
+import OrderForm from "./Form";
 
-export default function UserPhone() {
-  const [phone, setPhone] = useState();
+export default function Order() {
+  const [order, setOrder] = useState();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -10,17 +11,17 @@ export default function UserPhone() {
   }, []);
 
   function getData() {
-    fetch("http://localhost:3001/userphone")
+    fetch("http://localhost:3001/order")
       .then((response) => {
         return response.text();
       })
       .then((data) => {
-        setPhone(JSON.parse(data));
+        setOrder(JSON.parse(data));
       });
   }
 
-  function deleteItem(nationalcode, phoneno) {
-    fetch(`http://localhost:3001/userphone/${nationalcode}/${phoneno}`, {
+  function deleteItem(id) {
+    fetch(`http://localhost:3001/order/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -33,7 +34,7 @@ export default function UserPhone() {
   }
 
   function createItem(data) {
-    fetch("http://localhost:3001/userphone", {
+    fetch("http://localhost:3001/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,45 +52,79 @@ export default function UserPhone() {
 
   const columns = [
     {
+      title: "orderid",
+      dataIndex: "orderid",
+      key: "orderid",
+    },
+    {
       title: "nationalcode",
       dataIndex: "nationalcode",
       key: "nationalcode",
     },
     {
-      title: "phoneno",
-      dataIndex: "phoneno",
-      key: "phoneno",
+      title: "status",
+      dataIndex: "status",
+      key: "status",
     },
-
-    /* {
+    {
+      title: "price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "buydate",
+      dataIndex: "buydate",
+      key: "buydate",
+    },
+    {
+      title: "buydate",
+      dataIndex: "buydate",
+      key: "buydate",
+    },
+    {
+      title: "postalcode",
+      dataIndex: "postalcode",
+      key: "postalcode",
+    },
+    {
+      title: "discountid",
+      dataIndex: "discountid",
+      key: "discountid",
+    },
+    {
+      title: "description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button onClick={() => deleteItem(record.discountid)}>delete</Button>
+        <Button onClick={() => deleteItem(record.orderid)}>delete</Button>
       ),
-    }, */
+    },
   ];
 
   return (
     <div>
-      {/*  <Button
+      <Button
         className="create-button"
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add user phone
+        add order
       </Button>
       <Modal
         style={{
           top: 20,
         }}
-        title="new user phone"
+        title="new order"
         width={576}
         visible={visible}
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <DiscountForm
+        <OrderForm
           visible={visible}
           onSubmit={(data, resetForm) => {
             createItem(data);
@@ -97,8 +132,8 @@ export default function UserPhone() {
             setVisible(false);
           }}
         />
-      </Modal> */}
-      <Table columns={columns} dataSource={phone} />
+      </Modal>
+      <Table columns={columns} dataSource={order} />
     </div>
   );
 }

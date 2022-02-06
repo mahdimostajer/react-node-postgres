@@ -295,6 +295,18 @@ const getClientUser = () => {
   });
 };
 
+const getManagerUser = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM manageruser", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
 const getManager = () => {
   return new Promise(function (resolve, reject) {
     pool.query("SELECT * FROM manager", (error, results) => {
@@ -721,6 +733,72 @@ const getUserPhone = () => {
   });
 };
 
+const getOrder = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM orders", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
+const deleteOrder = (orderid) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM orders WHERE orderid = $1",
+      [orderid],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`order deleted with orderid: ${orderid}`);
+        }
+      }
+    );
+  });
+};
+
+const createOrder = (body) => {
+  return new Promise(function (resolve, reject) {
+    const {
+      orderid,
+      description,
+      status,
+      price,
+      buydate,
+      nationalcode,
+      postalcode,
+      discountid,
+    } = body;
+    pool.query(
+      "INSERT INTO orders (orderid, description, status, price, buydate, nationalcode, postalcode, discountid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
+      [
+        orderid,
+        description,
+        status,
+        price,
+        buydate,
+        nationalcode,
+        postalcode,
+        discountid,
+      ],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new order has been added: ${JSON.stringify(results.rows[0])}`
+          );
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -765,4 +843,8 @@ module.exports = {
   deleteDiscount,
   getUserPhone,
   updateAddress,
+  getManagerUser,
+  getOrder,
+  deleteOrder,
+  createOrder,
 };

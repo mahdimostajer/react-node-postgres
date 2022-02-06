@@ -493,6 +493,50 @@ app.put("/address", (req, res) => {
     });
 });
 
+app.get("/manageruser", (req, res) => {
+  model
+    .getManagerUser()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.get("/order", (req, res) => {
+  model
+    .getOrder()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/order/:orderid", (req, res) => {
+  model
+    .deleteOrder(req.params.orderid)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/order", (req, res) => {
+  model
+    .createOrder(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });

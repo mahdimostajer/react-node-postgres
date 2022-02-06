@@ -16,6 +16,8 @@ import Load from "./load/Load";
 import LoadProduct from "./loadProduct/LoadProduct";
 import Discount from "./discount/Discount";
 import UserPhone from "./userPhone/UserPhone";
+import ManagerUser from "./managerUser/ManagerUser";
+import Order from "./order/Order";
 
 function App() {
   const location = useLocation();
@@ -53,6 +55,9 @@ function App() {
         <Menu.Item key="/manager">
           <Link to="/manager">Manager</Link>
         </Menu.Item>
+        <Menu.Item key="/order">
+          <Link to="/order">Order</Link>
+        </Menu.Item>
         <Menu.Item key="/productcategory">
           <Link to="/productcategory">Product Category</Link>
         </Menu.Item>
@@ -76,6 +81,9 @@ function App() {
         </Menu.Item>
         <Menu.Item key="/clientaddressview">
           <Link to="/clientaddressview">Client Address View</Link>
+        </Menu.Item>
+        <Menu.Item key="/manageruser">
+          <Link to="/manageruser">Manager User View</Link>
         </Menu.Item>
       </Menu>
       <div style={{ marginLeft: "300px" }}>
@@ -124,6 +132,12 @@ function App() {
           </Route>
           <Route exact path="/userphone">
             <UserPhone />
+          </Route>
+          <Route exact path="/manageruser">
+            <ManagerUser />
+          </Route>
+          <Route exact path="/order">
+            <Order />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
