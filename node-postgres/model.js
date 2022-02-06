@@ -497,10 +497,10 @@ const createComment = (body) => {
 
 const createLoad = (body) => {
   return new Promise(function (resolve, reject) {
-    const { loadId, date, nationalCode } = body;
+    const { loadid, date, nationalcode } = body;
     pool.query(
-      "Insert into product (loadId, date, nationalCode) values ($1, $2, $3)",
-      [loadId, date, nationalCode],
+      "Insert into load (loadid, date, nationalcode) values ($1, $2, $3)",
+      [loadid, date, nationalcode],
       (error, results) => {
         if (error) {
           reject(error);
@@ -517,10 +517,10 @@ const createLoad = (body) => {
 
 const createLoadProduct = (body) => {
   return new Promise(function (resolve, reject) {
-    const { productId, LoadId } = body;
+    const { productid, loadid, qty } = body;
     pool.query(
-      "Insert into product (productId, LoadId) values ($1, $2)",
-      [productId, LoadId],
+      "Insert into loadproduct (productid, loadid, qty) values ($1, $2, $3)",
+      [productid, loadid, qty],
       (error, results) => {
         if (error) {
           reject(error);
@@ -559,10 +559,10 @@ const createPurchase = (body) => {
 
 const createDiscount = (body) => {
   return new Promise(function (resolve, reject) {
-    const { discountId, nationalCode, amount, max, endDate } = body;
+    const { discountid, nationalcode, amount, max, enddate } = body;
     pool.query(
-      "Insert into product (discountId,nationalCode, amount, max, endDate) values ($1, $2, $3, $4, $5)",
-      [discountId, nationalCode, amount, max, endDate],
+      "Insert into discount (discountid, nationalcode, amount, max, enddate) values ($1, $2, $3, $4, $5)",
+      [discountid, nationalcode, amount, max, enddate],
       (error, results) => {
         if (error) {
           reject(error);

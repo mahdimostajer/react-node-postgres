@@ -12,6 +12,9 @@ import Manager from "./manager/Manager";
 import ProductCategory from "./productCategory/productCategory";
 import Product from "./product/Product";
 import Comment from "./comment/Comment";
+import Load from "./load/Load";
+import LoadProduct from "./loadProduct/LoadProduct";
+import Discount from "./discount/Discount";
 
 function App() {
   const location = useLocation();
@@ -55,6 +58,15 @@ function App() {
         <Menu.Item key="/comment">
           <Link to="/comment">Comment</Link>
         </Menu.Item>
+        <Menu.Item key="/load">
+          <Link to="/load">Load</Link>
+        </Menu.Item>
+        <Menu.Item key="/loadproduct">
+          <Link to="/loadproduct">Load Product</Link>
+        </Menu.Item>
+        <Menu.Item key="/discount">
+          <Link to="/discount">Discount</Link>
+        </Menu.Item>
         <Menu.Item key="/clientuser">
           <Link to="/clientuser">Client User View</Link>
         </Menu.Item>
@@ -96,6 +108,15 @@ function App() {
           </Route>
           <Route exact path="/comment">
             <Comment />
+          </Route>
+          <Route exact path="/load">
+            <Load />
+          </Route>
+          <Route exact path="/loadproduct">
+            <LoadProduct />
+          </Route>
+          <Route exact path="/discount">
+            <Discount />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
