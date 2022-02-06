@@ -20,10 +20,10 @@ create table StoreStatus (tdate date, poroductsQty integer, sellQty integer, pri
 
 
 
-create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode));
+create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
 --
 -- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
--- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade);
+-- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
 
 -- //UserPhone
 create table UserPhone(nationalCode char(10), phoneNo integer, primary key(nationalCode, phoneNo), foreign key(nationalCode) references usersite(nationalCode));
