@@ -575,6 +575,118 @@ const createDiscount = (body) => {
     });
 };
 
+const deleteProductCategory = (name) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM ProductCategory WHERE name = $1",
+      [name],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`ProductCategory deleted with name: ${name}`);
+        }
+      }
+    );
+  });
+};
+
+const deleteProduct = (productId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM Product WHERE productId = $1",
+      [productId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`Product deleted with id: ${productId}`);
+        }
+      }
+    );
+  });
+};
+
+const deleteComment = (commentId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM Comment WHERE commentId = $1",
+      [commentId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`Comment deleted with id: ${commentId}`);
+        }
+      }
+    );
+  });
+};
+
+const deleteLoad = (loadId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM Load WHERE loadId = $1",
+      [loadId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`Load deleted with id: ${loadId}`);
+        }
+      }
+    );
+  });
+};
+
+const deleteLoadProduct = (productId, loadId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM LoadProduct WHERE productId = $1 and loadId = $2",
+      [productId, loadId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`LoadProduct deleted with productId: ${productId} and loadId: ${loadId}`);
+        }
+      }
+    );
+  });
+};
+
+const deletePurchase = (nationalCode, orderId, productId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM Purchase WHERE nationalCode = $1 and orderId = $2 and productId = $3",
+      [nationalCode, orderId, productId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`Purchase deleted`);
+        }
+      }
+    );
+  });
+};
+
+const deleteDiscount = (discountId) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM Discount WHERE discountId = $1",
+      [discountId],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`Discount deleted with id: ${discountId}`);
+        }
+      }
+    );
+  });
+};
+
 
 
 module.exports = {
@@ -595,4 +707,28 @@ module.exports = {
   createClient,
   getClientUser,
   getManager,
+  getProductCategory,
+  getProduct,
+  getComment,
+  getLoad,
+  getLoadProduct,
+  getPurchase,
+  getDiscount,
+  getDeliveryManUser,
+  getProductComment,
+  getUserOrder,
+  createProductCategory,
+  createProduct,
+  createComment,
+  createLoad,
+  createLoadProduct,
+  createPurchase,
+  createDiscount,
+  deleteProductCategory,
+  deleteProduct,
+  deleteComment,
+  deleteLoad,
+  deleteLoadProduct,
+  deletePurchase,
+  deleteDiscount,
 };

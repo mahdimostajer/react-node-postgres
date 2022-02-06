@@ -203,6 +203,272 @@ app.get("/manager", (req, res) => {
     });
 });
 
+app.get("/productCategory", (req, res) => {
+    model
+        .getProductCategory()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/product", (req, res) => {
+    model
+        .getProduct()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/comment", (req, res) => {
+    model
+        .getComment()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/load", (req, res) => {
+    model
+        .getLoad()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/loadProduct", (req, res) => {
+    model
+        .getLoadProduct()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/purchase", (req, res) => {
+    model
+        .getPurchase()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/discount", (req, res) => {
+    model
+        .getDiscount()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/deliveryManUser", (req, res) => {
+    model
+        .getDeliveryManUser()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/productComment", (req, res) => {
+    model
+        .getProductComment()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.get("/userOrder", (req, res) => {
+    model
+        .getUserOrder()
+        .then((response) => {
+            res.status(200).send(response);
+        })
+        .catch((error) => {
+            res.status(500).send(error);
+        });
+});
+
+app.post("/productCategory", (req, res) => {
+  model
+    .createProductCategory(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/product", (req, res) => {
+  model
+    .createProduct(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/comment", (req, res) => {
+  model
+    .createComment(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/load", (req, res) => {
+  model
+    .createLoad(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/loadProduct", (req, res) => {
+  model
+    .createLoadProduct(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/purchase", (req, res) => {
+  model
+    .createPurchase(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/discount", (req, res) => {
+  model
+    .createDiscount(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/productCategory/:name", (req, res) => {
+  model
+    .deleteProductCategory(req.params.name)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/product/:productId", (req, res) => {
+  model
+    .deleteProduct(req.params.productId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/comment/:commentId", (req, res) => {
+  model
+    .deleteComment(req.params.commentId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/load/:loadId", (req, res) => {
+  model
+    .deleteLoad(req.params.loadId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/loadProduct/:productId/:loadId", (req, res) => {
+  model
+    .deleteLoadProduct(req.params.productId,req.params.loadId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/purchase/:nationalcode/:orderId/:productId", (req, res) => {
+  model
+    .deletePurchase(req.params.nationalcode,req.params.orderId,req.params.productId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/discount/:discountId", (req, res) => {
+  model
+    .deleteDiscount(req.params.discountId)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });

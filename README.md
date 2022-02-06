@@ -89,7 +89,7 @@ create table Comment(commentId char(10), text varchar(1024), time date, productI
 create table Load(loadId char(10), date date, nationalCode char(10), primary key(loadId), foreign key(nationalCode) references Manager(nationalCode));
 
 
-create table LoadProduct(productId char(10), loadId char(10), primary key(productId, loadId), foreign key (productId) references Product(productId) on update cascade on delete cascade, foreign key (loadId) references Load(loadId) on delete cascade on update cascade);
+create table LoadProduct(productId char(10), loadId char(10), qty integer, primary key(productId, loadId), foreign key (productId) references Product(productId) on update cascade on delete cascade, foreign key (loadId) references Load(loadId) on delete cascade on update cascade);
 
 
 create table Purchase(nationalCode char(10), orderId char(10), productId char(10), productQty integer,
