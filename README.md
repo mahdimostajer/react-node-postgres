@@ -35,7 +35,7 @@ create table Notification(notifId char(10), date date, text varchar(1024), seenS
 create table DeliveryMan(nationalCode char(10), salary integer, workHour integer,startDate date, capacity integer, plateNo char(20), vehicleType varchar(15), primary key(nationalCode), foreign key(nationalCode) references usersite(nationalCode));
 
 -- //Manager
-create table Manager(nationalCode char(10), salary integer, workHour integer, startDate integer, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
+create table Manager(nationalCode char(10), salary integer, workHour integer, startDate Date, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
 
 create table Discount(discountId char(10), nationalCode char(10), amount integer, max integer, endDate date,
 	 primary key (discountId), foreign key (nationalCode) references Manager(nationalCode) on delete cascade on update cascade,
@@ -44,7 +44,7 @@ create table Discount(discountId char(10), nationalCode char(10), amount integer
 
 
 -- //StoreKeeper
-create table StoreKeeper(nationalCode char(10), salary integer, workHour integer, startDate integer, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
+create table StoreKeeper(nationalCode char(10), salary integer, workHour integer, startDate Date, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
 
 create table Orders (orderId char(10), description varchar(200), status varchar(15), price integer, buyDate date, nationalcode char(10), postalcode char(10), discountid char(10) unique,
 				   primary key(orderId), foreign key (postalcode) references address(postalcode) on update cascade on delete cascade,
