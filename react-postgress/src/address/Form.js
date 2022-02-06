@@ -1,4 +1,5 @@
 import { Row, Form, Input, Col, Button } from "antd";
+import { useEffect } from "react";
 
 export default function AddressForm({ onSubmit, initialValues, visible }) {
   const [form] = Form.useForm();
@@ -7,6 +8,15 @@ export default function AddressForm({ onSubmit, initialValues, visible }) {
     console.log(data);
     onSubmit(data, form.resetFields);
   };
+
+  useEffect(() => {
+    if (initialValues) {
+      console.log("here");
+      form.setFieldsValue(initialValues);
+      console.log(initialValues);
+    }
+  }, [initialValues, form]);
+
   return (
     <Form
       form={form}
@@ -18,7 +28,7 @@ export default function AddressForm({ onSubmit, initialValues, visible }) {
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item label="postalcode" name="postalcode">
-            <Input />
+            <Input disabled={initialValues ? true : false} />
           </Form.Item>
         </Col>
         <Col span={24}>

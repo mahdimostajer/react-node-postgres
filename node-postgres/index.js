@@ -204,113 +204,113 @@ app.get("/manager", (req, res) => {
 });
 
 app.get("/productCategory", (req, res) => {
-    model
-        .getProductCategory()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getProductCategory()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/product", (req, res) => {
-    model
-        .getProduct()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getProduct()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/comment", (req, res) => {
-    model
-        .getComment()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getComment()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/load", (req, res) => {
-    model
-        .getLoad()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getLoad()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/loadProduct", (req, res) => {
-    model
-        .getLoadProduct()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getLoadProduct()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/purchase", (req, res) => {
-    model
-        .getPurchase()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getPurchase()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/discount", (req, res) => {
-    model
-        .getDiscount()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getDiscount()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/deliveryManUser", (req, res) => {
-    model
-        .getDeliveryManUser()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getDeliveryManUser()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/productComment", (req, res) => {
-    model
-        .getProductComment()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getProductComment()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.get("/userOrder", (req, res) => {
-    model
-        .getUserOrder()
-        .then((response) => {
-            res.status(200).send(response);
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
+  model
+    .getUserOrder()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
 });
 
 app.post("/productCategory", (req, res) => {
@@ -436,7 +436,7 @@ app.delete("/load/:loadId", (req, res) => {
 
 app.delete("/loadProduct/:productId/:loadId", (req, res) => {
   model
-    .deleteLoadProduct(req.params.productId,req.params.loadId)
+    .deleteLoadProduct(req.params.productId, req.params.loadId)
     .then((response) => {
       res.status(200).send(response);
     })
@@ -447,7 +447,11 @@ app.delete("/loadProduct/:productId/:loadId", (req, res) => {
 
 app.delete("/purchase/:nationalcode/:orderId/:productId", (req, res) => {
   model
-    .deletePurchase(req.params.nationalcode,req.params.orderId,req.params.productId)
+    .deletePurchase(
+      req.params.nationalcode,
+      req.params.orderId,
+      req.params.productId
+    )
     .then((response) => {
       res.status(200).send(response);
     })
@@ -467,7 +471,27 @@ app.delete("/discount/:discountId", (req, res) => {
     });
 });
 
+app.get("/userphone", (req, res) => {
+  model
+    .getUserPhone()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
 
+app.put("/address", (req, res) => {
+  model
+    .updateAddress(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

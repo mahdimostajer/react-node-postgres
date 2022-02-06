@@ -153,6 +153,24 @@ const createAddress = (body) => {
   });
 };
 
+const updateAddress = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { postalcode, state, city, street, vallay, plate, floor } = body;
+    pool.query(
+      "update address set state = $2, city = $3 , street =$4 , vallay =$5 , plate = $6, floor =$7 where postalcode = $1 ",
+      [postalcode, state, city, street, vallay, plate, floor],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`address has been updated`);
+        }
+      }
+    );
+  });
+};
+
 const getClientAddress = () => {
   return new Promise(function (resolve, reject) {
     pool.query("SELECT * FROM clientaddress", (error, results) => {
@@ -691,6 +709,18 @@ const deleteDiscount = (discountId) => {
   });
 };
 
+const getUserPhone = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM userphone", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -733,4 +763,6 @@ module.exports = {
   deleteLoadProduct,
   deletePurchase,
   deleteDiscount,
+  getUserPhone,
+  updateAddress,
 };

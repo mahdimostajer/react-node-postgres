@@ -5,6 +5,8 @@ import AddressForm from "./Form";
 export default function Address() {
   const [address, setAddress] = useState();
   const [visible, setVisible] = useState(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [selected, setSelected] = useState();
   useEffect(() => {
     getAddress();
   }, []);
@@ -35,6 +37,23 @@ export default function Address() {
   function createAddress(data) {
     fetch("http://localhost:3001/address", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        alert(data);
+        getAddress();
+      });
+  }
+
+  function updateAddress(data) {
+    fetch("http://localhost:3001/address", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -92,6 +111,25 @@ export default function Address() {
         <Button onClick={() => deleteAddress(record.postalcode)}>delete</Button>
       ),
     },
+    {
+      title: "update",
+      key: "update",
+      render: (text, record) => (
+        <>
+          <Button
+            onClick={() => {
+              setUpdateVisible(true);
+              setSelected(record.postalcode);
+            }}
+            size="small"
+            type="primary"
+            ghost
+          >
+            update
+          </Button>
+        </>
+      ),
+    },
   ];
   return (
     <div>
@@ -118,6 +156,27 @@ export default function Address() {
             createAddress(data);
             resetForm();
             setVisible(false);
+          }}
+        />
+      </Modal>
+
+      <Modal
+        title="update address"
+        style={{
+          top: 20,
+        }}
+        width={576}
+        visible={updateVisible}
+        footer={null}
+        onCancel={() => setUpdateVisible(false)}
+      >
+        <AddressForm
+          visible={updateVisible}
+          initialValues={address?.find((item) => item?.postalcode === selected)}
+          onSubmit={(data, resetForm) => {
+            updateAddress(data);
+            resetForm();
+            setUpdateVisible(false);
           }}
         />
       </Modal>

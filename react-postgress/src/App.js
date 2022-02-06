@@ -15,6 +15,7 @@ import Comment from "./comment/Comment";
 import Load from "./load/Load";
 import LoadProduct from "./loadProduct/LoadProduct";
 import Discount from "./discount/Discount";
+import UserPhone from "./userPhone/UserPhone";
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,9 @@ function App() {
         </Menu.Item>
         <Menu.Item key="/logininfo">
           <Link to="/logininfo">Login Info</Link>
+        </Menu.Item>
+        <Menu.Item key="/userphone">
+          <Link to="/userphone">User Phone</Link>
         </Menu.Item>
         <Menu.Item key="/address">
           <Link to="/address">Address</Link>
@@ -117,6 +121,9 @@ function App() {
           </Route>
           <Route exact path="/discount">
             <Discount />
+          </Route>
+          <Route exact path="/userphone">
+            <UserPhone />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
