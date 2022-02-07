@@ -675,3 +675,36 @@ app.post("/client", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+app.get("/notification", (req, res) => {
+  model
+    .getnotification()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/notification/:notifid", (req, res) => {
+  model
+    .deletenotification(req.params.notifid)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/notification", (req, res) => {
+  model
+    .createNotification(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
