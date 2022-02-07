@@ -7,7 +7,7 @@ create domain qty as integer check (value >= 0);
 create table LoginInfo (username varchar(30), password PW, primary key(username));
 
 create table usersite (nationalcode char(10), firstname varchar(30), lastname varchar(30) ,username varchar(30),
-		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade );
+		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade, check(length(nationalcode)=10) );
 
 
 create table Client(nationalCode char(10), wallet wallet, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode));
