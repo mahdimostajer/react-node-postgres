@@ -1335,10 +1335,10 @@ const createDelivery = (body) => {
 
 const updateProductCategory = (body) => {
   return new Promise(function (resolve, reject) {
-    const { photo } = body;
+    const { photourl } = body;
     pool.query(
-      "update productcategory set photo = $1",
-      [photo],
+      "update productcategory set photourl = $1",
+      [photourl],
       (error, results) => {
         if (error) {
           reject(error);
