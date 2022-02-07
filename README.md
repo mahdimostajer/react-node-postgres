@@ -1,4 +1,3 @@
-```sql
 create table LoginInfo (username varchar(30), password varchar(30), primary key(username),check (length(password) > 8));
 
 
@@ -98,19 +97,19 @@ create table Purchase(nationalCode char(10), orderId char(10), productId char(10
 	 foreign key(productId) references Product(productId), check(productQty>=0));
 	 
 create view ClientAddressView as (select nationalCode, firstname, lastname, postalCode, state, city, street, vallay, plate, floor 
-				  from (clientaddress natural join address) natural join usersite)
+				  from (clientaddress natural join address) natural join usersite);
 
 
 create view ClientUser as (select nationalCode, wallet, firstName, lastName, username 
-			   from client natural join usersite)
+			   from (client natural join usersite));
 
 
 create view OrderAddress as (select OrderId, postalCode, state, city, street, vallay, plate, floor
-			     from orders natural join address)
+			     from orders natural join address);
 
 
 create view ManagerUser as (select nationalCode, workHour, startDate , salary , firstName, lastName, username
-			    from manager natural join usersite)
+			    from manager natural join usersite);
 
 create view deliveryManUser as
   select usersite.nationalCode,deliveryMan.capacity, deliveryMan.plateNo, deliveryMan.vehicleType, deliveryMan.salary, deliveryMan.workHour, deliveryMan.startDate, usersite.firstName, usersite.lastName, usersite.username
@@ -265,7 +264,7 @@ $psql$ language plpgsql;
 create trigger insertLoadProductUpdateProductQty
 after insert on loadProduct
 for each row
-execute procedure insertLoadP
+execute procedure insertLoadProductUpdateProductQtyProc();
 
 create or replace function updateDeliveryManUserProc() returns trigger as $psql$
 begin
@@ -349,5 +348,3 @@ create trigger insertDeliveryUpdateOrderStatus
 
 
 
-
-```
