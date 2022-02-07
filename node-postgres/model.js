@@ -1055,6 +1055,74 @@ const updateNotification = (body) => {
   });
 };
 
+
+const getDeliveryMan = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM deliveryman", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
+const deleteDeliveryMan = (nationalcode) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM deliveryman WHERE nationalcode = $1",
+      [nationalcode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`deliveryman deleted with nationalcode: ${nationalcode}`);
+        }
+      }
+    );
+  });
+};
+
+const createDeliveryMan = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype } = body;
+    pool.query(
+      "INSERT INTO deliveryman (nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype) VALUES ($1, $2, $3, $4, $5, $6, $7);",
+      [nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new deliveryman has been added: ${JSON.stringify(results.rows[0])}`
+          );
+        }
+      }
+    );
+  });
+};
+
+const updateDeliveryMan = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype } = body;
+    pool.query(
+      "update deliveryman set salary = $2, workhour = $3 , startdate =$4 , capacity =$5 , plateno = $6, vehicletype =$7 where nationalcode = $1 ",
+      [nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`deliveryman has been updated`);
+        }
+      }
+    );
+  });
+};
+
+
 module.exports = {
   getUsers,
   createUser,
@@ -1117,4 +1185,8 @@ module.exports = {
   deletenotification,
   createnotification,
   updatenotification,
+  getdeliveryman,
+  deletedeliveryman,
+  createdeliveryman,
+  updatedeliveryman,
 };
