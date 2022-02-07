@@ -30,8 +30,8 @@ create table StoreStatus (tdate date, poroductsQty integer, sellQty integer, pri
 
 
 
-create table UserPhone(nationalCode char(10), phoneNo integer, primary key(nationalCode, phoneNo), 
-foreign key(nationalCode) references usersite(nationalCode), check(length(phoneNo) = 11));
+create table UserPhone(nationalCode char(10), phoneNo char(11), primary key(nationalCode, phoneNo), 
+foreign key(nationalCode) references usersite(nationalCode));
 
 -- //Notification
 create table Notification(notifId char(10), date date, text varchar(1024), seenStatus boolean, nationalCode char(10), primary key(notifId), foreign key(nationalCode) references usersite(nationalCode));
