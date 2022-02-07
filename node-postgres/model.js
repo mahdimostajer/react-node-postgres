@@ -933,6 +933,62 @@ const updateOrder = (body) => {
   });
 };
 
+
+const deleteUserPhone = (postalcode) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM userphone WHERE nationalcode = $1 and phoneno = $2", 
+      [nationalcode, phoneno],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`userphone deleted with nationalcode: ${postalcode} and phoneno: ${phoneno}`);
+        }
+      }
+    );
+  });
+};
+
+const createUserPhone = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, phoneno } = body;
+    pool.query(
+      "INSERT INTO userphone (nationalcode, phoneno) VALUES ($1, $2);",
+      [nationalcode, phoneno],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new userphone has been added: ${JSON.stringify(results.rows[0])}`
+          );
+        }
+      }
+    );
+  });
+};
+
+const updateUserPhone = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, phoneno } = body;
+    pool.query(
+      "update userphone set phoneno = $2 where nationalcode = $1 ",
+      [nationalcode, phoneno],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`userphone has been updated`);
+        }
+      }
+    );
+  });
+};
+
+
 module.exports = {
   getUsers,
   createUser,
@@ -988,4 +1044,7 @@ module.exports = {
   updateUser,
   updateLogininfo,
   updateOrder,
+  deleteUserPhone,
+  createUserPhone,
+  updateUserPhone,
 };
