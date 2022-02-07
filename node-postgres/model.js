@@ -934,7 +934,7 @@ const updateOrder = (body) => {
 };
 
 
-const deleteUserPhone = (postalcode) => {
+const deleteUserPhone = (nationalcode, phoneno) => {
   return new Promise(function (resolve, reject) {
     pool.query(
       "DELETE FROM userphone WHERE nationalcode = $1 and phoneno = $2", 
@@ -988,6 +988,72 @@ const updateUserPhone = (body) => {
   });
 };
 
+
+const getNotification = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM notification", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
+const deleteNotification = (notifid) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM address WHERE notifid = $1",
+      [notifid],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`notification deleted with notifid: ${notifid}`);
+        }
+      }
+    );
+  });
+};
+
+const createNotification = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { notifid, date, text, seenstatus, nationalcode } = body;
+    pool.query(
+      "INSERT INTO notification ( notifid, date, text, seenstatus, nationalcode ) VALUES ($1, $2, $3, $4, $5);",
+      [ notifid, date, text, seenstatus, nationalcode ],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new notification has been added: ${JSON.stringify(results.rows[0])}`
+          );
+        }
+      }
+    );
+  });
+};
+
+const updateNotification = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { notifid, date, text, seenstatus, nationalcode } = body;
+    pool.query(
+      "update address set date = $2, text = $3 , seenstatus =$4 , nationalcode =$5 where notifid = $1 ",
+      [ notifid, date, text, seenstatus, nationalcode ],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`notification has been updated`);
+        }
+      }
+    );
+  });
+};
 
 module.exports = {
   getUsers,
@@ -1047,4 +1113,8 @@ module.exports = {
   deleteUserPhone,
   createUserPhone,
   updateUserPhone,
+  getnotification,
+  deletenotification,
+  createnotification,
+  updatenotification,
 };
