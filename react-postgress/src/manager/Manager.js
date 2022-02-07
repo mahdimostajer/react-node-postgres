@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
-import { Table } from "antd";
+import { Button, Modal, Table } from "antd";
+import ManagerForm from "./Form";
 
 export default function Manager() {
-  const [manager, setManager] = useState();
+  const [data, setData] = useState();
+  const [visible, setVisible] = useState(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [selected, setSelected] = useState();
+
   useEffect(() => {
-    getManger();
+    getData();
   }, []);
 
-  function getManger() {
+  function getData() {
     fetch("http://localhost:3001/manager")
       .then((response) => {
         return response.text();
       })
       .then((data) => {
-        setManager(JSON.parse(data));
+        setData(JSON.parse(data));
       });
   }
 
-  /*   function deleteClientAddress(postalcode, nationalcode) {
-    fetch(`http://localhost:3001/clientaddress/${postalcode}/${nationalcode}`, {
+  function deleteItem(id) {
+    fetch(`http://localhost:3001/manager/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -26,12 +31,12 @@ export default function Manager() {
       })
       .then((data) => {
         alert(data);
-        getClientAddress();
+        getData();
       });
   }
 
-  function createAddress(data) {
-    fetch("http://localhost:3001/clientaddress", {
+  function createItem(data) {
+    fetch("http://localhost:3001/manager", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,9 +48,26 @@ export default function Manager() {
       })
       .then((data) => {
         alert(data);
-        getClientAddress();
+        getData();
       });
-  } */
+  }
+
+  function updateItem(data) {
+    fetch("http://localhost:3001/manager", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        alert(data);
+        getData();
+      });
+  }
 
   const columns = [
     {
@@ -64,29 +86,88 @@ export default function Manager() {
       key: "workhour",
     },
     {
-      title: "startDate",
+      title: "startdate",
       dataIndex: "startdate",
       key: "startdate",
     },
 
-    /*     {
+    {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button
-          onClick={() =>
-            deleteClientAddress(record.postalcode, record.nationalcode)
-          }
-        >
-          delete
-        </Button>
+        <Button onClick={() => deleteItem(record.nationalcode)}>delete</Button>
       ),
-    }, */
+    },
+    {
+      title: "update",
+      key: "update",
+      render: (text, record) => (
+        <>
+          <Button
+            onClick={() => {
+              setUpdateVisible(true);
+              setSelected(record.nationalcode);
+            }}
+            size="small"
+            type="primary"
+            ghost
+          >
+            update
+          </Button>
+        </>
+      ),
+    },
   ];
 
   return (
     <div>
-      <Table columns={columns} dataSource={manager} />
+      <Button
+        className="create-button"
+        type="primary"
+        onClick={() => setVisible(true)}
+      >
+        add manager
+      </Button>
+      <Modal
+        style={{
+          top: 20,
+        }}
+        title="new manager"
+        width={576}
+        visible={visible}
+        footer={null}
+        onCancel={() => setVisible(false)}
+      >
+        <ManagerForm
+          visible={visible}
+          onSubmit={(data, resetForm) => {
+            createItem(data);
+            resetForm();
+            setVisible(false);
+          }}
+        />
+      </Modal>
+      <Modal
+        title="update manager"
+        style={{
+          top: 20,
+        }}
+        width={576}
+        visible={updateVisible}
+        footer={null}
+        onCancel={() => setUpdateVisible(false)}
+      >
+        <ManagerForm
+          visible={updateVisible}
+          initialValues={data?.find((item) => item?.nationalcode === selected)}
+          onSubmit={(data, resetForm) => {
+            updateItem(data);
+            resetForm();
+            setUpdateVisible(false);
+          }}
+        />
+      </Modal>
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 }
