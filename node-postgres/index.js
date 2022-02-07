@@ -819,18 +819,7 @@ app.delete("/delivery/:orderid/:deliveryman/:storekeeper", (req, res) => {
     });
 });
 
-app.post("/productCategory", (req, res) => {
-  model
-    .createDelivery(req.body)
-    .then((response) => {
-      res.status(200).send(response);
-    })
-    .catch((error) => {
-      res.status(500).send(error);
-    });
-});
-
-app.post("/product", (req, res) => {
+app.put("/productCategory", (req, res) => {
   model
     .updateProductCategory(req.body)
     .then((response) => {
@@ -841,7 +830,7 @@ app.post("/product", (req, res) => {
     });
 });
 
-app.post("/comment", (req, res) => {
+app.put("/product", (req, res) => {
   model
     .updateProduct(req.body)
     .then((response) => {
@@ -852,7 +841,7 @@ app.post("/comment", (req, res) => {
     });
 });
 
-app.post("/load", (req, res) => {
+app.put("/comment", (req, res) => {
   model
     .updateComment(req.body)
     .then((response) => {
@@ -863,7 +852,7 @@ app.post("/load", (req, res) => {
     });
 });
 
-app.post("/purchase", (req, res) => {
+app.put("/load", (req, res) => {
   model
     .updateLoad(req.body)
     .then((response) => {
@@ -874,7 +863,7 @@ app.post("/purchase", (req, res) => {
     });
 });
 
-app.post("/discount", (req, res) => {
+app.put("/purchase", (req, res) => {
   model
     .updatePurchase(req.body)
     .then((response) => {
@@ -885,7 +874,7 @@ app.post("/discount", (req, res) => {
     });
 });
 
-app.post("/deliveryManUser", (req, res) => {
+app.put("/discount", (req, res) => {
   model
     .updateDiscount(req.body)
     .then((response) => {
@@ -896,7 +885,7 @@ app.post("/deliveryManUser", (req, res) => {
     });
 });
 
-app.post("/productComment", (req, res) => {
+app.put("/deliveryManUser", (req, res) => {
   model
     .updateDeliveryManUser(req.body)
     .then((response) => {
@@ -907,9 +896,75 @@ app.post("/productComment", (req, res) => {
     });
 });
 
-app.post("/clientOrder", (req, res) => {
+app.put("/productComment", (req, res) => {
   model
     .updateProductComment(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/clientOrder", (req, res) => {
+  model
+    .updateClientOrder(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/userPhone", (req, res) => {
+  model
+    .updateUserPhone(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/notification", (req, res) => {
+  model
+    .updateNotification(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/deliveryMan", (req, res) => {
+  model
+    .updateDeliveryMan(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/manager", (req, res) => {
+  model
+    .updateManager(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/storekeeper", (req, res) => {
+  model
+    .updateStorekeeper(req.body)
     .then((response) => {
       res.status(200).send(response);
     })
