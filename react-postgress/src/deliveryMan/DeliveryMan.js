@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Table, Modal } from "antd";
-import NotificationForm from "./Form";
+import DeliveryManForm from "./Form";
 
-export default function Notification() {
+export default function DeliveryMan() {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
   const [updateVisible, setUpdateVisible] = useState(false);
@@ -13,7 +13,7 @@ export default function Notification() {
   }, []);
 
   function getData() {
-    fetch("http://localhost:3001/notification")
+    fetch("http://localhost:3001/deliveryman")
       .then((response) => {
         return response.text();
       })
@@ -23,7 +23,7 @@ export default function Notification() {
   }
 
   function deleteItem(id) {
-    fetch(`http://localhost:3001/notification/${id}`, {
+    fetch(`http://localhost:3001/deliveryman/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -36,7 +36,7 @@ export default function Notification() {
   }
 
   function createItem(data) {
-    fetch("http://localhost:3001/notification", {
+    fetch("http://localhost:3001/deliveryman", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function Notification() {
   }
 
   function updateItem(data) {
-    fetch("http://localhost:3001/notification", {
+    fetch("http://localhost:3001/deliveryman", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -71,38 +71,47 @@ export default function Notification() {
 
   const columns = [
     {
-      title: "notifid",
-      dataIndex: "notifid",
-      key: "notifid",
-    },
-    {
-      title: "date",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "text",
-      dataIndex: "text",
-      key: "text",
-    },
-    {
-      title: "seenstatus",
-      dataIndex: "seenstatus",
-      key: "seenstatus",
-      render: (text, record) => (
-        <span>{record.seenstatus ? "true" : "false"}</span>
-      ),
-    },
-    {
       title: "nationalcode",
       dataIndex: "nationalcode",
       key: "nationalcode",
     },
     {
+      title: "capacity",
+      dataIndex: "capacity",
+      key: "capacity",
+    },
+    {
+      title: "plateno",
+      dataIndex: "plateno",
+      key: "plateno",
+    },
+    {
+      title: "vehicletype",
+      dataIndex: "vehicletype",
+      key: "vehicletype",
+    },
+
+    {
+      title: "salary",
+      dataIndex: "salary",
+      key: "salary",
+    },
+    {
+      title: "workhour",
+      dataIndex: "workhour",
+      key: "workhour",
+    },
+    {
+      title: "startDate",
+      dataIndex: "startdate",
+      key: "startdate",
+    },
+
+    {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button onClick={() => deleteItem(record.notifid)}>delete</Button>
+        <Button onClick={() => deleteItem(record.nationalcode)}>delete</Button>
       ),
     },
     {
@@ -113,7 +122,7 @@ export default function Notification() {
           <Button
             onClick={() => {
               setUpdateVisible(true);
-              setSelected(record.notifid);
+              setSelected(record.nationalcode);
             }}
             size="small"
             type="primary"
@@ -133,19 +142,19 @@ export default function Notification() {
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add notification
+        add delivery man
       </Button>
       <Modal
         style={{
           top: 20,
         }}
-        title="new notification"
+        title="new delivery man"
         width={576}
         visible={visible}
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <NotificationForm
+        <DeliveryManForm
           visible={visible}
           onSubmit={(data, resetForm) => {
             createItem(data);
@@ -164,9 +173,9 @@ export default function Notification() {
         footer={null}
         onCancel={() => setUpdateVisible(false)}
       >
-        <NotificationForm
+        <DeliveryManForm
           visible={updateVisible}
-          initialValues={data?.find((item) => item?.notifid === selected)}
+          initialValues={data?.find((item) => item?.nationalcode === selected)}
           onSubmit={(data, resetForm) => {
             updateItem(data);
             resetForm();
