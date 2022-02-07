@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Table, Modal } from "antd";
+import UserPhoneForm from "./Form";
 
 export default function UserPhone() {
-  const [phone, setPhone] = useState();
+  const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export default function UserPhone() {
         return response.text();
       })
       .then((data) => {
-        setPhone(JSON.parse(data));
+        setData(JSON.parse(data));
       });
   }
 
@@ -61,18 +62,20 @@ export default function UserPhone() {
       key: "phoneno",
     },
 
-    /* {
+    {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button onClick={() => deleteItem(record.discountid)}>delete</Button>
+        <Button onClick={() => deleteItem(record.nationalcode, record.phoneno)}>
+          delete
+        </Button>
       ),
-    }, */
+    },
   ];
 
   return (
     <div>
-      {/*  <Button
+      <Button
         className="create-button"
         type="primary"
         onClick={() => setVisible(true)}
@@ -89,7 +92,7 @@ export default function UserPhone() {
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <DiscountForm
+        <UserPhoneForm
           visible={visible}
           onSubmit={(data, resetForm) => {
             createItem(data);
@@ -97,8 +100,8 @@ export default function UserPhone() {
             setVisible(false);
           }}
         />
-      </Modal> */}
-      <Table columns={columns} dataSource={phone} />
+      </Modal>
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 }

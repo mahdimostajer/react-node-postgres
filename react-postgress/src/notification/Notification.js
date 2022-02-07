@@ -155,7 +155,7 @@ export default function Notification() {
         />
       </Modal>
       <Modal
-        title="update user"
+        title="update notification"
         style={{
           top: 20,
         }}

@@ -506,7 +506,7 @@ app.get("/userphone", (req, res) => {
 
 app.delete("/userphone/:nationalcode/:phoneno", (req, res) => {
   model
-    .deleteuserphone(req.params.nationalcode, req.params.phoneno)
+    .deleteUserPhone(req.params.nationalcode, req.params.phoneno)
     .then((response) => {
       res.status(200).send(response);
     })
@@ -517,7 +517,7 @@ app.delete("/userphone/:nationalcode/:phoneno", (req, res) => {
 
 app.post("/userphone", (req, res) => {
   model
-    .createuserphone(req.body)
+    .createUserPhone(req.body)
     .then((response) => {
       res.status(200).send(response);
     })
