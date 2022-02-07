@@ -482,6 +482,29 @@ app.get("/userphone", (req, res) => {
     });
 });
 
+app.delete("/userphone/:nationalcode/:phoneno", (req, res) => {
+  model
+    .deleteuserphone(req.params.nationalcode, req.params.phoneno)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/userphone", (req, res) => {
+  model
+    .createuserphone(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+
 app.put("/address", (req, res) => {
   model
     .updateAddress(req.body)
