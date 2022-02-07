@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, Table } from "antd";
-import ManagerForm from "./Form";
+import StoreKeeperForm from "./Form";
 
-export default function Manager() {
+export default function StoreKeeper() {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
   const [updateVisible, setUpdateVisible] = useState(false);
@@ -13,7 +13,7 @@ export default function Manager() {
   }, []);
 
   function getData() {
-    fetch("http://localhost:3001/manager")
+    fetch("http://localhost:3001/storekeeper")
       .then((response) => {
         return response.text();
       })
@@ -23,7 +23,7 @@ export default function Manager() {
   }
 
   function deleteItem(id) {
-    fetch(`http://localhost:3001/manager/${id}`, {
+    fetch(`http://localhost:3001/storekeeper/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -36,7 +36,7 @@ export default function Manager() {
   }
 
   function createItem(data) {
-    fetch("http://localhost:3001/manager", {
+    fetch("http://localhost:3001/storekeeper", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export default function Manager() {
   }
 
   function updateItem(data) {
-    fetch("http://localhost:3001/manager", {
+    fetch("http://localhost:3001/storekeeper", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -126,19 +126,19 @@ export default function Manager() {
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add manager
+        add storekeeper
       </Button>
       <Modal
         style={{
           top: 20,
         }}
-        title="new manager"
+        title="new storekeeper"
         width={576}
         visible={visible}
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <ManagerForm
+        <StoreKeeperForm
           visible={visible}
           onSubmit={(data, resetForm) => {
             createItem(data);
@@ -148,7 +148,7 @@ export default function Manager() {
         />
       </Modal>
       <Modal
-        title="update manager"
+        title="update storekeeper"
         style={{
           top: 20,
         }}
@@ -157,7 +157,7 @@ export default function Manager() {
         footer={null}
         onCancel={() => setUpdateVisible(false)}
       >
-        <ManagerForm
+        <StoreKeeperForm
           visible={updateVisible}
           initialValues={data?.find((item) => item?.nationalcode === selected)}
           onSubmit={(data, resetForm) => {

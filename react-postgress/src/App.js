@@ -26,6 +26,7 @@ import UserOrder from "./userOrder/UserOrder";
 import DeliveryManUser from "./deliveryManUser/DeliveryManUser";
 import Notification from "./notification/Notification";
 import DeliveryMan from "./deliveryMan/DeliveryMan";
+import StoreKeeper from "./storeKeeper/StoreKeeper";
 
 function App() {
   const location = useLocation();
@@ -62,6 +63,9 @@ function App() {
         </Menu.Item>
         <Menu.Item key="/manager">
           <Link to="/manager">Manager</Link>
+        </Menu.Item>
+        <Menu.Item key="/storekeeper">
+          <Link to="/storekeeper">Store Keeper</Link>
         </Menu.Item>
         <Menu.Item key="/deliveryman">
           <Link to="/deliveryman">Delivery Man</Link>
@@ -194,6 +198,9 @@ function App() {
           </Route>
           <Route exact path="/deliveryman">
             <DeliveryMan />
+          </Route>
+          <Route exact path="/storekeeper">
+            <StoreKeeper />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
