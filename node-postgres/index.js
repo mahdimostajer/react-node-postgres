@@ -617,3 +617,38 @@ app.put("/order", (req, res) => {
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
+
+
+
+app.get("/client", (req, res) => {
+  model
+    .getClient()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/client/:nationalcode", (req, res) => {
+  model
+    .deleteClient(req.params.nationalcode)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/client", (req, res) => {
+  model
+    .createClient(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
