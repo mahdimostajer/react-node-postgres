@@ -25,9 +25,9 @@ export default function DeliveryManUser() {
       key: "nationalcode",
     },
     {
-      title: " capacity",
-      dataIndex: " capacity",
-      key: " capacity",
+      title: "capacity",
+      dataIndex: "capacity",
+      key: "capacity",
     },
     {
       title: "plateno",
