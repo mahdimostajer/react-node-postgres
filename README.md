@@ -267,6 +267,87 @@ after insert on loadProduct
 for each row
 execute procedure insertLoadP
 
+create or replace function updateDeliveryManUserProc() returns trigger as $psql$
+begin
+  update DeliveryMan set salary = new.salary, workHour = new.workHour, startDate = new.startDate, capacity = new.capacity, plateNo = new.plateNo, vehicleType = new.vehicleType where DeliveryMan.nationalCode = old.nationalCode;
+  update users set firstname = new.firstname, lastName = new.lastName where users.nationalCode = old.nationalCode;
+  return old;
+end;
+$psql$ language plpgsql;
+
+create trigger updateDeliveryManUser
+instead of update on deliveryManUser
+for each row
+execute procedure updateDeliveryManUserProc();
+
+
+create or replace function insertProductCommentProc() returns trigger as $psql$
+begin
+  insert into Product values (new.productId, new.productName, null, null, null, null, null, null, null, null, null, null);
+  insert into Comment values (new.commentId, new.text, new.time, new.productId, new.nationalCode);
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger insertProductComment
+  instead of insert on ProductComment
+  for each row
+  execute procedure insertProductCommentProc();
+
+
+
+
+create or replace function updateOrderStatusInsertNotifProc() returns trigger as $psql$
+begin
+  if new.status != old.status then
+    if new.status = 0 then
+      if old.status = 1 then
+        raise exception 'cant change sent to processing';
+      end if;
+      if old.status = 2 then
+        raise exception 'cant change delivered to processing';
+      end if;
+     insert into Notification (notifId, date, text, seenStatus, nationalCode) values ((SELECT substr(md5(random()::text),0,11)),now(),concat('status of order ',new.orderId,' has changed to processing'),0,new.nationalCode);
+    end if;
+
+    if new.status = 1 then
+      if old.status = 2 then
+        raise exception 'cant change delivered to sent';
+      end if;
+     insert into Notification (notifId, date, text, seenStatus, nationalCode) values ((SELECT substr(md5(random()::text),0,11)),now(),concat('status of order ',new.orderId,' has changed to sent'),0,new.nationalCode);
+    end if;
+
+    if new.status = 2 then
+     insert into Notification (notifId, date, text, seenStatus, nationalCode) values ((SELECT substr(md5(random()::text),0,11)),now(),concat('status of order ',new.orderId,' has changed to delivered'),0,new.nationalCode);
+    end if;
+
+  end if;
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger updateOrderStatusInsertNotif
+  after update on orders
+  for each row
+  execute procedure updateOrderStatusInsertNotifProc();
+
+
+
+
+create or replace function insertDeliveryUpdateOrderStatusProc() returns trigger as $psql$
+begin
+  update orders set status = 1 where orderId = new.orderId;
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger insertDeliveryUpdateOrderStatus
+  after insert on delivery
+  for each row
+  execute procedure insertDeliveryUpdateOrderStatusProc();
+
+
+
 
 
 ```
