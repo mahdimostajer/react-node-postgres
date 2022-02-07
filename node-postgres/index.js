@@ -796,3 +796,36 @@ app.post("/storekeeper", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+app.get("/delivery", (req, res) => {
+  model
+    .getDelivery()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/delivery/:orderid/:deliveryman/:storekeeper", (req, res) => {
+  model
+    .deleteDelivery(req.params.orderid, req.params.deliveryman, req.params.storekeeper)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/delivery", (req, res) => {
+  model
+    .createDelivery(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
