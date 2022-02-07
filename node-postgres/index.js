@@ -774,7 +774,7 @@ app.get("/storekeeper", (req, res) => {
 
 app.delete("/storekeeper/:nationalcode", (req, res) => {
   model
-    .deleteStoreKeeper(req.params.nationalcode)
+    .deletestorekeeper(req.params.nationalcode)
     .then((response) => {
       res.status(200).send(response);
     })

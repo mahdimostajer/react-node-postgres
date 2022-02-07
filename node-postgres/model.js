@@ -1247,7 +1247,7 @@ const createStoreKeeper = (body) => {
   return new Promise(function (resolve, reject) {
     const { nationalcode, salary, workhour, startdate } = body;
     pool.query(
-      "INSERT INTO manager (nationalcode, salary, workhour, startdate) VALUES ($1, $2, $3, $4);",
+      "INSERT INTO storekeeper (nationalcode, salary, workhour, startdate) VALUES ($1, $2, $3, $4);",
       [nationalcode, salary, workhour, startdate],
       (error, results) => {
         if (error) {
@@ -1353,10 +1353,34 @@ const updateProductCategory = (body) => {
 
 const updateProduct = (body) => {
   return new Promise(function (resolve, reject) {
-    const { name, price, qty, photo1, photo2, photo3, photo4, photo5, manufacturedate, expirationdate, categoryname } = body;
+    const {
+      name,
+      price,
+      qty,
+      photo1,
+      photo2,
+      photo3,
+      photo4,
+      photo5,
+      manufacturedate,
+      expirationdate,
+      categoryname,
+    } = body;
     pool.query(
       "update product set name = $1, price = $2, qty = $3, photo1 = $4, photo2 = $5, photo3 = $6, photo4 = $7, photo5 = $8, manufactureDate = $9, expirationDate = $10, categoryName = $11",
-      [name, price, qty, photo1, photo2, photo3, photo4, photo5, manufacturedate, expirationdate, categoryname],
+      [
+        name,
+        price,
+        qty,
+        photo1,
+        photo2,
+        photo3,
+        photo4,
+        photo5,
+        manufacturedate,
+        expirationdate,
+        categoryname,
+      ],
       (error, results) => {
         if (error) {
           reject(error);
@@ -1443,10 +1467,30 @@ const updateDiscount = (body) => {
 
 const updateDeliveryManUser = (body) => {
   return new Promise(function (resolve, reject) {
-    const {  capacity, plateNo, vehicleType ,salary, workHour, startDate, firstName, lastName, username } = body;
+    const {
+      capacity,
+      plateNo,
+      vehicleType,
+      salary,
+      workHour,
+      startDate,
+      firstName,
+      lastName,
+      username,
+    } = body;
     pool.query(
       "update deliveryManUser set capacity = $1, plateNo = $2, vehicleType = $3 ,salary = $4, workHour = $5, startDate = $6, firstName = $7, lastName = $8, username = $9 ",
-      [ capacity, plateNo, vehicleType ,salary, workHour, startDate, firstName, lastName, username],
+      [
+        capacity,
+        plateNo,
+        vehicleType,
+        salary,
+        workHour,
+        startDate,
+        firstName,
+        lastName,
+        username,
+      ],
       (error, results) => {
         if (error) {
           reject(error);
@@ -1461,10 +1505,10 @@ const updateDeliveryManUser = (body) => {
 
 const updateProductComment = (body) => {
   return new Promise(function (resolve, reject) {
-    const { nationalCode, productName,text, time } = body;
+    const { nationalCode, productName, text, time } = body;
     pool.query(
       "update ProductComment set nationalCode = $1, productName = $2, text = $3, time = $4 ",
-      [nationalCode, productName,text, time],
+      [nationalCode, productName, text, time],
       (error, results) => {
         if (error) {
           reject(error);
@@ -1494,8 +1538,6 @@ const updateClientOrder = (body) => {
     );
   });
 };
-
-
 
 module.exports = {
   getUsers,
