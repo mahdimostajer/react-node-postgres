@@ -189,7 +189,7 @@ execute procedure updateClientAddressProc();
 create or replace function updateClientUserProc() returns trigger as $psql$
 begin
   update client set wallet = new.wallet where client.nationalCode = old.nationalCode;
-  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  update usersite set firstname = new.firstname, lastName = new.lastName where usersite.nationalCode = old.nationalCode;
   return old;
 end;
 $psql$ language plpgsql;
@@ -203,7 +203,7 @@ execute procedure updateClientUserProc();
 create or replace function updateManagerUserProc() returns trigger as $psql$
 begin
   update manager set salary = new.salary, workHour = new.workHour, startDate = new.startDate where manager.nationalCode = old.nationalCode;
-  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  update usersite set firstname = new.firstname, lastName = new.lastName where usersite.nationalCode = old.nationalCode;
   return old;
 end;
 $psql$ language plpgsql;
@@ -266,7 +266,7 @@ $psql$ language plpgsql;
 create trigger insertLoadProductUpdateProductQty
 after insert on loadProduct
 for each row
-execute procedure insertLoadP
+execute procedure insertLoadProductUpdateProductQtyProc();
 
 create or replace function updateDeliveryManUserProc() returns trigger as $psql$
 begin
@@ -346,6 +346,7 @@ create trigger insertDeliveryUpdateOrderStatus
   after insert on delivery
   for each row
   execute procedure insertDeliveryUpdateOrderStatusProc();
+
 
 
 
