@@ -255,8 +255,17 @@ create trigger updateOrderPriceUpdateWallet
   for each row
   execute procedure updateOrderPriceUpdateWalletProc();
 
+create or replace function insertLoadProductUpdateProductQtyProc() returns trigger as $psql$
+begin
+update product set qty = qty + new.qty where productId = new.productId;
+return new;
+end;
+$psql$ language plpgsql;
 
-
+create trigger insertLoadProductUpdateProductQty
+after insert on loadProduct
+for each row
+execute procedure insertLoadP
 
 
 
