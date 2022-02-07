@@ -83,7 +83,7 @@ create table Product (productId char(10), name varchar(20), price integer, qty i
 	);
 
 
-create table Comment(commentId char(10), text varchar(1024), time date, productId char(10), nationalCode char(10), primary key(commentId), foreign key(nationalCode) references Client(nationalCode));
+create table Comment(commentId char(10), text varchar(1024), time date, productId char(10), nationalCode char(10), primary key(commentId), foreign key(nationalCode) references Client(nationalCode), foreign key(productId) references Product(productId) on update cascade on delete cascade);
 
 
 create table Load(loadId char(10), date date, nationalCode char(10), primary key(loadId), foreign key(nationalCode) references Manager(nationalCode));
@@ -111,4 +111,40 @@ create view OrderAddress as (select OrderId, postalCode, state, city, street, va
 
 create view ManagerUser as (select nationalCode, workHour, startDate , salary , firstName, lastName, username
 			    from manager natural join usersite)
+
+create view deliveryManUser as
+  select usersite.nationalCode,deliveryMan.capacity, deliveryMan.plateNo, deliveryMan.vehicleType, deliveryMan.salary, deliveryMan.workHour, deliveryMan.startDate, usersite.firstName, usersite.lastName, usersite.username
+  from (deliveryman join usersite on deliveryMan.nationalCode = usersite.nationalCode);
+
+create view productComment as
+  select product.productId, comment.commentId, comment.nationalCode, product.name as productName, comment.text, comment.time
+  from (product join comment on product.productid = comment.productid);
+
+create view userOrder as
+  select orders.orderId, orders.description, orders.status, orders.price, orders.buyDate, usersite.firstname, usersite.lastname from (usersite join orders on usersite.nationalCode = orders.nationalCode);
+
+create view ClientDiscountView as
+  select ClientDiscount.discountId, ClientDiscount.nationalCode, Discount.amount, Discount.max, Discount.endDate
+  from (ClientDiscount join Discount on ClientDiscount.discountId = Discount.discountId and ClientDiscount.nationalCode = Discount.nationalCode );
+
+create view OrderProduct as
+  select  Product.productId, Purchase.productQTY, Product.name as productName, Product.price as productPrice, Orders.orderId
+  from (Product NATURAL JOIN Orders NATURAL JOIN Purchase);
+
+create view Employee as
+	select Manager.nationalCode, Manager.salary, Manager.workHour, Manager.startDate, Usersite.firstName, Usersite.lastName from(Manager NATURAL JOIN Usersite)
+        UNION ALL
+        select StoreKeeper.nationalCode, StoreKeeper.salary, StoreKeeper.workHour, StoreKeeper.startDate, Usersite.firstName, Usersite.lastName from(StoreKeeper NATURAL JOIN Usersite)
+        UNION ALL
+        select DeliveryMan.nationalCode, DeliveryMan.salary, DeliveryMan.workHour, DeliveryMan.startDate, Usersite.firstName, Usersite.lastName from(DeliveryMan NATURAL JOIN Usersite);
+
+create view ProductSellCount as
+	select Purchase.productId, Product.name, Product.qty
+	from (Purchase Natural join Product);
+
+
+
+
+
+
 ```
