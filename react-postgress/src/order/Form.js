@@ -13,6 +13,12 @@ export default function OrderForm({ onSubmit, initialValues, visible }) {
     form.setFieldsValue({ price: "0" });
   });
 
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues, form]);
+
   return (
     <Form
       form={form}
@@ -24,7 +30,7 @@ export default function OrderForm({ onSubmit, initialValues, visible }) {
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item label="orderid" name="orderid">
-            <Input />
+            <Input disabled={initialValues} />
           </Form.Item>
         </Col>
         <Col span={24}>

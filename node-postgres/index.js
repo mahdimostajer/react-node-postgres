@@ -581,6 +581,39 @@ app.get("/orderaddress", (req, res) => {
     });
 });
 
+app.put("/users", (req, res) => {
+  model
+    .updateUser(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/logininfo", (req, res) => {
+  model
+    .updateLogininfo(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.put("/order", (req, res) => {
+  model
+    .updateOrder(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });

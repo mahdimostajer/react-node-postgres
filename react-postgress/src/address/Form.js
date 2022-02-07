@@ -11,9 +11,7 @@ export default function AddressForm({ onSubmit, initialValues, visible }) {
 
   useEffect(() => {
     if (initialValues) {
-      console.log("here");
       form.setFieldsValue(initialValues);
-      console.log(initialValues);
     }
   }, [initialValues, form]);
 

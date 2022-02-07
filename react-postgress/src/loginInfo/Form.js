@@ -1,6 +1,6 @@
 import { Row, Form, Input, Col, Button } from "antd";
 import { useEffect } from "react";
-export default function UserForm({ onSubmit, initialValues, visible }) {
+export default function LoginInfoForm({ onSubmit, initialValues, visible }) {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
@@ -24,28 +24,13 @@ export default function UserForm({ onSubmit, initialValues, visible }) {
     >
       <Row gutter={16}>
         <Col span={24}>
-          <Form.Item label="nationalcode" name="nationalcode">
-            <Input disabled={initialValues} />
-          </Form.Item>
-        </Col>
-        <Col span={24}>
-          <Form.Item label="firstname" name="firstname">
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span={24}>
-          <Form.Item label="lastname" name="lastname">
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span={24}>
           <Form.Item label="username" name="username">
             <Input disabled={initialValues} />
           </Form.Item>
         </Col>
         <Col span={24}>
           <Form.Item label="password" name="password">
-            <Input disabled={initialValues} />
+            <Input />
           </Form.Item>
         </Col>
         <Col span={8} offset={16}>

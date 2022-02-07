@@ -5,6 +5,8 @@ import UserForm from "./Form";
 
 export default function User() {
   const [users, setUsers] = useState();
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [selected, setSelected] = useState();
 
   useEffect(() => {
     getUser();
@@ -48,6 +50,25 @@ export default function User() {
         <Button onClick={() => deleteUser(record.nationalcode)}>delete</Button>
       ),
     },
+    {
+      title: "update",
+      key: "update",
+      render: (text, record) => (
+        <>
+          <Button
+            onClick={() => {
+              setUpdateVisible(true);
+              setSelected(record.nationalcode);
+            }}
+            size="small"
+            type="primary"
+            ghost
+          >
+            update
+          </Button>
+        </>
+      ),
+    },
   ];
 
   function createUser(data) {
@@ -79,6 +100,24 @@ export default function User() {
         getUser();
       });
   }
+
+  function updateUser(data) {
+    fetch("http://localhost:3001/users", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        alert(data);
+        getUser();
+      });
+  }
+
   const [visible, setVisible] = useState(false);
 
   return (
@@ -111,6 +150,26 @@ export default function User() {
           />
         </Modal>
       </>
+      <Modal
+        title="update user"
+        style={{
+          top: 20,
+        }}
+        width={576}
+        visible={updateVisible}
+        footer={null}
+        onCancel={() => setUpdateVisible(false)}
+      >
+        <UserForm
+          visible={updateVisible}
+          initialValues={users?.find((item) => item?.nationalcode === selected)}
+          onSubmit={(data, resetForm) => {
+            updateUser(data);
+            resetForm();
+            setUpdateVisible(false);
+          }}
+        />
+      </Modal>
       <Table columns={columns} dataSource={users} />
     </div>
   );

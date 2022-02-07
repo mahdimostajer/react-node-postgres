@@ -5,6 +5,8 @@ import OrderForm from "./Form";
 export default function Order() {
   const [order, setOrder] = useState();
   const [visible, setVisible] = useState(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [selected, setSelected] = useState();
 
   useEffect(() => {
     getData();
@@ -36,6 +38,23 @@ export default function Order() {
   function createItem(data) {
     fetch("http://localhost:3001/order", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+        alert(data);
+        getData();
+      });
+  }
+
+  function updateOrder(data) {
+    fetch("http://localhost:3001/order", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -98,6 +117,25 @@ export default function Order() {
         <Button onClick={() => deleteItem(record.orderid)}>delete</Button>
       ),
     },
+    {
+      title: "update",
+      key: "update",
+      render: (text, record) => (
+        <>
+          <Button
+            onClick={() => {
+              setUpdateVisible(true);
+              setSelected(record.orderid);
+            }}
+            size="small"
+            type="primary"
+            ghost
+          >
+            update
+          </Button>
+        </>
+      ),
+    },
   ];
 
   return (
@@ -125,6 +163,26 @@ export default function Order() {
             createItem(data);
             resetForm();
             setVisible(false);
+          }}
+        />
+      </Modal>
+      <Modal
+        title="update user"
+        style={{
+          top: 20,
+        }}
+        width={576}
+        visible={updateVisible}
+        footer={null}
+        onCancel={() => setUpdateVisible(false)}
+      >
+        <OrderForm
+          visible={updateVisible}
+          initialValues={order?.find((item) => item?.orderid === selected)}
+          onSubmit={(data, resetForm) => {
+            updateOrder(data);
+            resetForm();
+            setUpdateVisible(false);
           }}
         />
       </Modal>

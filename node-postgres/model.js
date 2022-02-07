@@ -861,6 +861,78 @@ const getOrderAddress = () => {
   });
 };
 
+const updateUser = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, firstname, lastname } = body;
+    pool.query(
+      "update usersite set firstname = $2, lastname = $3 where nationalcode = $1 ",
+      [nationalcode, firstname, lastname],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`user has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateLogininfo = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { username, password } = body;
+    pool.query(
+      "update logininfo set password = $2 where username = $1 ",
+      [username, password],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`logininfo has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateOrder = (body) => {
+  return new Promise(function (resolve, reject) {
+    const {
+      orderid,
+      description,
+      status,
+      price,
+      buydate,
+      nationalcode,
+      postalcode,
+      discountid,
+    } = body;
+    pool.query(
+      "update orders set description = $2, status = $3 , price =$4 , buydate =$5 , nationalcode = $6, postalcode =$7, discountid =$8 where orderid = $1 ",
+      [
+        orderid,
+        description,
+        status,
+        price,
+        buydate,
+        nationalcode,
+        postalcode,
+        discountid,
+      ],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`order has been updated`);
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -913,4 +985,7 @@ module.exports = {
   deleteClientDiscount,
   createClientDiscount,
   getOrderAddress,
+  updateUser,
+  updateLogininfo,
+  updateOrder,
 };
