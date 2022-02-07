@@ -767,23 +767,25 @@ const createOrder = (body) => {
       orderid,
       description,
       status,
-      price,
+      totalprice,
       buydate,
       nationalcode,
       postalcode,
       discountid,
+      finalprice,
     } = body;
     pool.query(
-      "INSERT INTO orders (orderid, description, status, price, buydate, nationalcode, postalcode, discountid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
+      "INSERT INTO orders (orderid, description, status, totalprice, buydate, nationalcode, postalcode, discountid, finalprice) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);",
       [
         orderid,
         description,
         status,
-        price,
+        totalprice,
         buydate,
         nationalcode,
         postalcode,
         discountid,
+        finalprice,
       ],
       (error, results) => {
         if (error) {
@@ -903,23 +905,25 @@ const updateOrder = (body) => {
       orderid,
       description,
       status,
-      price,
+      totalprice,
       buydate,
       nationalcode,
       postalcode,
       discountid,
+      finalprice,
     } = body;
     pool.query(
-      "update orders set description = $2, status = $3 , price =$4 , buydate =$5 , nationalcode = $6, postalcode =$7, discountid =$8 where orderid = $1 ",
+      "update orders set description = $2, status = $3 , totalprice =$4 , buydate =$5 , nationalcode = $6, postalcode =$7, discountid =$8, finalprice=$9 where orderid = $1 ",
       [
         orderid,
         description,
         status,
-        price,
+        totalprice,
         buydate,
         nationalcode,
         postalcode,
         discountid,
+        finalprice,
       ],
       (error, results) => {
         if (error) {

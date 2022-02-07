@@ -86,9 +86,14 @@ export default function Order() {
       key: "status",
     },
     {
-      title: "price",
-      dataIndex: "price",
-      key: "price",
+      title: "totalprice",
+      dataIndex: "totalprice",
+      key: "totalprice",
+    },
+    {
+      title: "finalprice",
+      dataIndex: "finalprice",
+      key: "finalprice",
     },
     {
       title: "buydate",

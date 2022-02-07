@@ -5,12 +5,13 @@ export default function OrderForm({ onSubmit, initialValues, visible }) {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
-    console.log(data);
     onSubmit(data, form.resetFields);
   };
 
   useEffect(() => {
-    form.setFieldsValue({ price: "0" });
+    if (!initialValues) {
+      form.setFieldsValue({ totalprice: "0", finalprice: "0" });
+    }
   });
 
   useEffect(() => {
@@ -54,7 +55,12 @@ export default function OrderForm({ onSubmit, initialValues, visible }) {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item label="price" name="price">
+          <Form.Item label="totalprice" name="totalprice">
+            <Input disabled />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item label="finalprice" name="finalprice">
             <Input disabled />
           </Form.Item>
         </Col>
