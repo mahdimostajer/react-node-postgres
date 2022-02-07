@@ -37,7 +37,7 @@ foreign key(nationalCode) references usersite(nationalCode), check(length(phoneN
 create table Notification(notifId char(10), date date, text varchar(1024), seenStatus boolean, nationalCode char(10), primary key(notifId), foreign key(nationalCode) references usersite(nationalCode));
 
 -- //DeliveryMan
-create table DeliveryMan(nationalCode char(10), salary integer, workHour integer,startDate Date, capacity integer, plateNo char(20), vehicleType varchar(15), primary key(nationalCode), foreign key(nationalCode) references usersite(nationalCode));
+create table DeliveryMan(nationalCode char(10), salary integer, workHour integer,startDate Date, capacity integer, plateNo char(20), vehicleType varchar(15), primary key(nationalCode), foreign key(nationalCode) references usersite(nationalCode), check(salary>3000000 and 0 <= workhour and 12 <= workhour and 0 < capacity));
 
 -- //Manager
 create table Manager(nationalCode char(10), salary integer, workHour integer, startDate Date, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
