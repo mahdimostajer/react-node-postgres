@@ -61,7 +61,7 @@ foreign Key(orderId) references Orders(orderId), foreign Key(deliveryMan) refere
 
 
 create table clientdiscount (discountid char(10), nationalcode char(10), primary key(discountid, nationalcode),
-					     foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade,
+					     foreign key (nationalcode) references client(nationalcode) on update cascade on delete cascade,
 				             foreign key (discountid) references discount(discountid) on update cascade on delete cascade);
 
 
