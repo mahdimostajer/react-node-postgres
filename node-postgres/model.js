@@ -943,7 +943,7 @@ const deleteUserPhone = (nationalcode, phoneno) => {
         if (error) {
           reject(error);
         } else {
-          resolve(`userphone deleted with nationalcode: ${postalcode} and phoneno: ${phoneno}`);
+          resolve(`userphone deleted with nationalcode: ${nationalcode} and phoneno: ${phoneno}`);
         }
       }
     );
@@ -1243,6 +1243,54 @@ const updateStorekeeper = (body) => {
   });
 };
 
+const getDelivery = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM delivery", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
+const deleteDelivery = (orderid, deliveryman, storekeeper) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM delivery WHERE orderid = $1 and deliveryman = $2 and storekeeper = $3",
+      [orderid, deliveryman, storekeeper],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`delivery deleted with orderid: ${orderid} and deliveryman: ${deliveryman} and storekeeper: ${storekeeper}`);
+        }
+      }
+    );
+  });
+};
+
+const createDelivery = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { orderid, deliveryman, storekeeper } = body;
+    pool.query(
+      "INSERT INTO delivery (orderid, deliveryman, storekeeper) VALUES ($1, $2, $3);",
+      [orderid, deliveryman, storekeeper],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new delivery has been added: ${JSON.stringify(results.rows[0])}`
+          );
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -1316,4 +1364,7 @@ module.exports = {
   deletestorekeeper,
   createstorekeeper,
   updatestorekeeper,
+  getdelivery,
+  deletedelivery,
+  createdelivery,
 };
