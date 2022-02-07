@@ -763,3 +763,36 @@ app.post("/deliveryman", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+app.get("/storekeeper", (req, res) => {
+  model
+    .getStoreKeeper()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/storekeeper/:nationalcode", (req, res) => {
+  model
+    .deleteStoreKeeper(req.params.nationalcode)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/storekeeper", (req, res) => {
+  model
+    .createStoreKeeper(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
