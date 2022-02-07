@@ -708,3 +708,36 @@ app.post("/notification", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+app.get("/deliveryman", (req, res) => {
+  model
+    .getDeliveryMan()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/deliveryman/:nationalcode", (req, res) => {
+  model
+    .deleteDeliveryMan(req.params.nationalcode)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/deliveryman", (req, res) => {
+  model
+    .createDeliveryMan(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
