@@ -203,6 +203,28 @@ app.get("/manager", (req, res) => {
     });
 });
 
+app.delete("/manager/:nationalcode", (req, res) => {
+  model
+    .deleteManager(req.params.nationalcode)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/manager", (req, res) => {
+  model
+    .createManger(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
 app.get("/productCategory", (req, res) => {
   model
     .getProductCategory()
