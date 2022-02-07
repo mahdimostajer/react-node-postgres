@@ -50,7 +50,7 @@ create table Discount(discountId char(10), nationalCode char(10), amount integer
 -- //StoreKeeper
 create table StoreKeeper(nationalCode char(10), salary integer, workHour integer, startDate Date, primary key(nationalCode), foreign key (nationalCode) references usersite(nationalCode));
 
-create table Orders (orderId char(10), description varchar(200), status varchar(15), price integer, buyDate date, nationalcode char(10), postalcode char(10), discountid char(10) unique,
+create table Orders (orderId char(10), description varchar(200), status integer, price integer, buyDate date, nationalcode char(10), postalcode char(10), discountid char(10) unique,
 				   primary key(orderId), foreign key (postalcode) references address(postalcode) on update cascade on delete cascade,
 				   foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade,
 				   foreign key (discountid) references discount(discountid) on update cascade on delete cascade, check (price >= 0), check(status In(0,1,2)));
