@@ -146,5 +146,118 @@ create view ProductSellCount as
 
 
 
+create or replace function insertClientAddressProc() returns trigger as $psql$
+begin
+  insert into address values (new.postalCode, new.state,new.city, new.street,new.vallay,new.plate,new.floor);
+  insert into clientAddress values (new.postalCode,new.nationalCode);
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger insertClientAddress
+  instead of insert on clientAddressView
+  for each row
+  execute procedure insertClientAddressProc();
+
+create or replace function deleteClientAddressProc() returns trigger as $psql$
+begin
+  delete from clientAddress where clientAddress.nationalCode = old.nationalCode;
+  return old;
+end;
+$psql$ language plpgsql;
+
+create trigger deleteClientAddress
+instead of delete on clientAddressView
+for each row
+execute procedure deleteClientAddressProc();
+
+
+create or replace function updateClientAddressProc() returns trigger as $psql$
+begin
+  update Address set state = new.state, city = new.city, street = new.street, vallay = new.vallay, plate = new.plate, floor = new.floor where clientAddress.postalCode = old.postalCode;
+  return old;
+end;
+$psql$ language plpgsql;
+
+create trigger updateClientAddress
+instead of update on clientAddressView
+for each row
+execute procedure updateClientAddressProc();
+
+
+create or replace function updateClientUserProc() returns trigger as $psql$
+begin
+  update client set wallet = new.wallet where client.nationalCode = old.nationalCode;
+  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  return old;
+end;
+$psql$ language plpgsql;
+
+create trigger updateClientUser
+instead of update on ClientUser
+for each row
+execute procedure updateClientUserProc();
+
+
+create or replace function updateManagerUserProc() returns trigger as $psql$
+begin
+  update manager set salary = new.salary, workHour = new.workHour, startDate = new.startDate where manager.nationalCode = old.nationalCode;
+  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  return old;
+end;
+$psql$ language plpgsql;
+
+create trigger updateManagerUser
+instead of update on ManagerUser
+for each row
+execute procedure updateManagerUserProc();
+
+
+create or replace function insertPurchaseUpdateOrderPriceProc() returns trigger as $psql$
+begin
+  update orders set
+    totalPrice = totalPrice + (new.productQty * (select price from product where new.productId = productId)),
+    finalPrice = finalPrice + (new.productQty * (select price from product where new.productId = productId) * (select amount from discount where new.discountId = discountId)/100)
+    where new.orderId = orderId;
+
+  update product set qty = qty - new.productQty where new.productId = productId;
+
+  if ((select (totalPrice - finalPrice) from orders where new.orderId = orderId )>(select max from discount where new.discountId = discountId)) THEN
+      update orders set
+        finalPrice = totalPrice - (select max from discount where new.discountId = discountId)
+        where new.orderId = orderId;
+  end if;
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger insertPurchaseUpdateOrderPrice
+  after insert on Purchase
+  for each row
+  execute procedure insertPurchaseUpdateOrderPriceProc();
+
+
+
+create or replace function updateOrderPriceUpdateWalletProc() returns trigger as $psql$
+begin
+  if (new.finalPrice != old.finalPrice) then
+  update client set
+    wallet = wallet - (new.finalPrice - old.finalPrice)
+    where new.nationalCode = nationalCode;
+  end if;
+
+  return new;
+end;
+$psql$ language plpgsql;
+
+create trigger updateOrderPriceUpdateWallet
+  after update on orders
+  for each row
+  execute procedure updateOrderPriceUpdateWalletProc();
+
+
+
+
+
 
 ```
