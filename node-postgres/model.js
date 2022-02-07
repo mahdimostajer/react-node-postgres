@@ -1569,4 +1569,13 @@ module.exports = {
   getDelivery,
   deleteDelivery,
   createDelivery,
+  updateProductCategory,
+  updateProduct,
+  updateComment,
+  updateLoad,
+  updatePurchase,
+  updateDiscount,
+  updateDeliveryManUser,
+  updateProductComment,
+  updateClientOrder,
 };

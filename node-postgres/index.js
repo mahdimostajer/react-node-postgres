@@ -819,9 +819,97 @@ app.delete("/delivery/:orderid/:deliveryman/:storekeeper", (req, res) => {
     });
 });
 
-app.post("/delivery", (req, res) => {
+app.post("/productCategory", (req, res) => {
   model
     .createDelivery(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/product", (req, res) => {
+  model
+    .updateProductCategory(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/comment", (req, res) => {
+  model
+    .updateProduct(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/load", (req, res) => {
+  model
+    .updateComment(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/purchase", (req, res) => {
+  model
+    .updateLoad(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/discount", (req, res) => {
+  model
+    .updatePurchase(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/deliveryManUser", (req, res) => {
+  model
+    .updateDiscount(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/productComment", (req, res) => {
+  model
+    .updateDeliveryManUser(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/clientOrder", (req, res) => {
+  model
+    .updateProductComment(req.body)
     .then((response) => {
       res.status(200).send(response);
     })
