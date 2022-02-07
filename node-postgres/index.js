@@ -526,7 +526,6 @@ app.post("/userphone", (req, res) => {
     });
 });
 
-
 app.put("/address", (req, res) => {
   model
     .updateAddress(req.body)
@@ -663,8 +662,6 @@ app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
 
-
-
 app.get("/client", (req, res) => {
   model
     .getClient()
@@ -700,7 +697,7 @@ app.post("/client", (req, res) => {
 
 app.get("/notification", (req, res) => {
   model
-    .getnotification()
+    .getNotification()
     .then((response) => {
       res.status(200).send(response);
     })
@@ -711,7 +708,7 @@ app.get("/notification", (req, res) => {
 
 app.delete("/notification/:notifid", (req, res) => {
   model
-    .deletenotification(req.params.notifid)
+    .deleteNotification(req.params.notifid)
     .then((response) => {
       res.status(200).send(response);
     })
@@ -810,7 +807,11 @@ app.get("/delivery", (req, res) => {
 
 app.delete("/delivery/:orderid/:deliveryman/:storekeeper", (req, res) => {
   model
-    .deleteDelivery(req.params.orderid, req.params.deliveryman, req.params.storekeeper)
+    .deleteDelivery(
+      req.params.orderid,
+      req.params.deliveryman,
+      req.params.storekeeper
+    )
     .then((response) => {
       res.status(200).send(response);
     })

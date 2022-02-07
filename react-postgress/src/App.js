@@ -24,6 +24,7 @@ import OrderAddress from "./orderAddress/OrderAddress";
 import ProductComment from "./productComment/ProductComment";
 import UserOrder from "./userOrder/UserOrder";
 import DeliveryManUser from "./deliveryManUser/DeliveryManUser";
+import Notification from "./notification/Notification";
 
 function App() {
   const location = useLocation();
@@ -84,6 +85,9 @@ function App() {
         </Menu.Item>
         <Menu.Item key="/discount">
           <Link to="/discount">Discount</Link>
+        </Menu.Item>
+        <Menu.Item key="/notification">
+          <Link to="/notification">Notification</Link>
         </Menu.Item>
         <Menu.Item key="/clientdiscount">
           <Link to="/clientdiscount">Client Discount</Link>
@@ -180,6 +184,9 @@ function App() {
           </Route>
           <Route exact path="/userorder">
             <UserOrder />
+          </Route>
+          <Route exact path="/notification">
+            <Notification />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
