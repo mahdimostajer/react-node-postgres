@@ -1,19 +1,24 @@
 ```sql
-create table LoginInfo (username varchar(30), password varchar(30), primary key(username),check (length(password) > 8));
+create domain pw as varchar(30) check (length(value) > 8);
+create domain wallet as integer check (value >= 0);
+create domain qty as integer check (value >= 0);
+
+
+create table LoginInfo (username varchar(30), password PW, primary key(username));
 
 create table usersite (nationalcode char(10), firstname varchar(30), lastname varchar(30) ,username varchar(30),
-		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade ,check (length(nationalcode) = 10));
+		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade );
 
 
-create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
+create table Client(nationalCode char(10), wallet wallet, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode));
 --
--- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
--- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
+-- create table Client (nationalcode char(10), wallet wallet, primary key(nationalcode),
+-- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade);
 
 -- //UserPhone
 
 create table Address (postalCode char(10), state varchar(12), city varchar(12), street varchar(12), vallay varchar(12), plate integer,
-		      floor integer, primary key (postalCode), check (length(postalCode) = 10));
+		      floor integer, primary key (postalCode));
 
 
 create table ClientAddress (postalcode char(10), nationalcode char(10), primary key (postalcode, nationalcode),
@@ -48,7 +53,7 @@ create table StoreKeeper(nationalCode char(10), salary integer, workHour integer
 create table Orders (orderId char(10), description varchar(200), status varchar(15), price integer, buyDate date, nationalcode char(10), postalcode char(10), discountid char(10) unique,
 				   primary key(orderId), foreign key (postalcode) references address(postalcode) on update cascade on delete cascade,
 				   foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade,
-				   foreign key (discountid) references discount(discountid) on update cascade on delete cascade, check (price >= 0), check(status In('processing','sending','delivered')));
+				   foreign key (discountid) references discount(discountid) on update cascade on delete cascade, check (price >= 0), check(status In(0,1,2)));
 
 -- //Delivery
 create table Delivery(orderId char(10), deliveryMan char(10), storeKeeper char(10), primary Key(orderId, deliveryMan, storeKeeper),
@@ -74,11 +79,11 @@ create table clientdiscount (discountid char(10), nationalcode char(10), primary
 create table ProductCategory (name varchar(20), photourl varchar(2048), primary key (name));
 
 
-create table Product (productId char(10), name varchar(20), price integer, qty integer,
+create table Product (productId char(10), name varchar(20), price integer, qty qty,
 	 	photo1 varchar(2048), photo2 varchar(2048), photo3 varchar(2048), photo4 varchar(2048), photo5 varchar(2048),
 	  manufactureDate date, expirationDate date, categoryName varchar(20),
 		primary key(productId), foreign key(categoryName) references ProductCategory(name) on update cascade on delete cascade ,
-		check ((expirationDate > manufactureDate) and (qty >= 0) and (price >= 0))
+		check ((expirationDate > manufactureDate) and (price >= 0))
 	);
 
 
@@ -91,10 +96,10 @@ create table Load(loadId char(10), date date, nationalCode char(10), primary key
 create table LoadProduct(productId char(10), loadId char(10), qty integer, primary key(productId, loadId), foreign key (productId) references Product(productId) on update cascade on delete cascade, foreign key (loadId) references Load(loadId) on delete cascade on update cascade);
 
 
-create table Purchase(nationalCode char(10), orderId char(10), productId char(10), productQty integer,
+create table Purchase(nationalCode char(10), orderId char(10), productId char(10), productQty qty,
 	 primary key(nationalCode, orderId, productId),
 	 foreign key(nationalCode) references Client(nationalCode), foreign key(orderId) references Orders(orderId),
-	 foreign key(productId) references Product(productId), check(productQty>=0));
+	 foreign key(productId) references Product(productId));
 
 
 	 
