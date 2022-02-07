@@ -98,19 +98,19 @@ create table Purchase(nationalCode char(10), orderId char(10), productId char(10
 	 foreign key(productId) references Product(productId), check(productQty>=0));
 	 
 create view ClientAddressView as (select nationalCode, firstname, lastname, postalCode, state, city, street, vallay, plate, floor 
-				  from (clientaddress natural join address) natural join usersite)
+				  from (clientaddress natural join address) natural join usersite);
 
 
 create view ClientUser as (select nationalCode, wallet, firstName, lastName, username 
-			   from client natural join usersite)
+			   from client natural join usersite);
 
 
 create view OrderAddress as (select OrderId, postalCode, state, city, street, vallay, plate, floor
-			     from orders natural join address)
+			     from orders natural join address);
 
 
 create view ManagerUser as (select nationalCode, workHour, startDate , salary , firstName, lastName, username
-			    from manager natural join usersite)
+			    from manager natural join usersite);
 
 create view deliveryManUser as
   select usersite.nationalCode,deliveryMan.capacity, deliveryMan.plateNo, deliveryMan.vehicleType, deliveryMan.salary, deliveryMan.workHour, deliveryMan.startDate, usersite.firstName, usersite.lastName, usersite.username
