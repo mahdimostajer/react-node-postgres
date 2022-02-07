@@ -933,17 +933,18 @@ const updateOrder = (body) => {
   });
 };
 
-
 const deleteUserPhone = (nationalcode, phoneno) => {
   return new Promise(function (resolve, reject) {
     pool.query(
-      "DELETE FROM userphone WHERE nationalcode = $1 and phoneno = $2", 
+      "DELETE FROM userphone WHERE nationalcode = $1 and phoneno = $2",
       [nationalcode, phoneno],
       (error, results) => {
         if (error) {
           reject(error);
         } else {
-          resolve(`userphone deleted with nationalcode: ${nationalcode} and phoneno: ${phoneno}`);
+          resolve(
+            `userphone deleted with nationalcode: ${nationalcode} and phoneno: ${phoneno}`
+          );
         }
       }
     );
@@ -988,7 +989,6 @@ const updateUserPhone = (body) => {
   });
 };
 
-
 const getNotification = () => {
   return new Promise(function (resolve, reject) {
     pool.query("SELECT * FROM notification", (error, results) => {
@@ -1022,14 +1022,16 @@ const createNotification = (body) => {
     const { notifid, date, text, seenstatus, nationalcode } = body;
     pool.query(
       "INSERT INTO notification ( notifid, date, text, seenstatus, nationalcode ) VALUES ($1, $2, $3, $4, $5);",
-      [ notifid, date, text, seenstatus, nationalcode ],
+      [notifid, date, text, seenstatus, nationalcode],
       (error, results) => {
         if (error) {
           reject(error);
           console.log(error);
         } else {
           resolve(
-            `A new notification has been added: ${JSON.stringify(results.rows[0])}`
+            `A new notification has been added: ${JSON.stringify(
+              results.rows[0]
+            )}`
           );
         }
       }
@@ -1042,7 +1044,7 @@ const updateNotification = (body) => {
     const { notifid, date, text, seenstatus, nationalcode } = body;
     pool.query(
       "update address set date = $2, text = $3 , seenstatus =$4 , nationalcode =$5 where notifid = $1 ",
-      [ notifid, date, text, seenstatus, nationalcode ],
+      [notifid, date, text, seenstatus, nationalcode],
       (error, results) => {
         if (error) {
           reject(error);
@@ -1054,7 +1056,6 @@ const updateNotification = (body) => {
     );
   });
 };
-
 
 const getDeliveryMan = () => {
   return new Promise(function (resolve, reject) {
@@ -1086,17 +1087,35 @@ const deleteDeliveryMan = (nationalcode) => {
 
 const createDeliveryMan = (body) => {
   return new Promise(function (resolve, reject) {
-    const { nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype } = body;
+    const {
+      nationalcode,
+      salary,
+      workhour,
+      startdate,
+      capacity,
+      plateno,
+      vehicletype,
+    } = body;
     pool.query(
       "INSERT INTO deliveryman (nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype) VALUES ($1, $2, $3, $4, $5, $6, $7);",
-      [nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype],
+      [
+        nationalcode,
+        salary,
+        workhour,
+        startdate,
+        capacity,
+        plateno,
+        vehicletype,
+      ],
       (error, results) => {
         if (error) {
           reject(error);
           console.log(error);
         } else {
           resolve(
-            `A new deliveryman has been added: ${JSON.stringify(results.rows[0])}`
+            `A new deliveryman has been added: ${JSON.stringify(
+              results.rows[0]
+            )}`
           );
         }
       }
@@ -1106,10 +1125,26 @@ const createDeliveryMan = (body) => {
 
 const updateDeliveryMan = (body) => {
   return new Promise(function (resolve, reject) {
-    const { nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype } = body;
+    const {
+      nationalcode,
+      salary,
+      workhour,
+      startdate,
+      capacity,
+      plateno,
+      vehicletype,
+    } = body;
     pool.query(
       "update deliveryman set salary = $2, workhour = $3 , startdate =$4 , capacity =$5 , plateno = $6, vehicletype =$7 where nationalcode = $1 ",
-      [nationalcode, salary, workhour, startdate, capacity, plateno, vehicletype],
+      [
+        nationalcode,
+        salary,
+        workhour,
+        startdate,
+        capacity,
+        plateno,
+        vehicletype,
+      ],
       (error, results) => {
         if (error) {
           reject(error);
@@ -1174,8 +1209,7 @@ const updateManager = (body) => {
       }
     );
   });
-};  
-
+};
 
 const getStoreKeeper = () => {
   return new Promise(function (resolve, reject) {
@@ -1217,7 +1251,9 @@ const createStoreKeeper = (body) => {
           console.log(error);
         } else {
           resolve(
-            `A new storekeeper has been added: ${JSON.stringify(results.rows[0])}`
+            `A new storekeeper has been added: ${JSON.stringify(
+              results.rows[0]
+            )}`
           );
         }
       }
@@ -1264,7 +1300,9 @@ const deleteDelivery = (orderid, deliveryman, storekeeper) => {
         if (error) {
           reject(error);
         } else {
-          resolve(`delivery deleted with orderid: ${orderid} and deliveryman: ${deliveryman} and storekeeper: ${storekeeper}`);
+          resolve(
+            `delivery deleted with orderid: ${orderid} and deliveryman: ${deliveryman} and storekeeper: ${storekeeper}`
+          );
         }
       }
     );
@@ -1349,22 +1387,22 @@ module.exports = {
   deleteUserPhone,
   createUserPhone,
   updateUserPhone,
-  getnotification,
-  deletenotification,
-  createnotification,
-  updatenotification,
-  getdeliveryman,
-  deletedeliveryman,
-  createdeliveryman,
-  updatedeliveryman,
-  deletemanager,
-  createmanager,
-  updatemanager,
-  getstorekeeper,
+  getNotification,
+  deleteNotification,
+  createNotification,
+  updateNotification,
+  getDeliveryMan,
+  deleteDeliveryMan,
+  createDeliveryMan,
+  updateDeliveryMan,
+  deleteManager,
+  createManager,
+  updateManager,
+  getStoreKeeper,
   deletestorekeeper,
-  createstorekeeper,
-  updatestorekeeper,
-  getdelivery,
-  deletedelivery,
-  createdelivery,
+  createStoreKeeper,
+  updateStorekeeper,
+  getDelivery,
+  deleteDelivery,
+  createDelivery,
 };
