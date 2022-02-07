@@ -1,10 +1,16 @@
 ```sql
 create table LoginInfo (username varchar(30), password varchar(30), primary key(username),check (length(password) > 8));
 
-
 create table usersite (nationalcode char(10), firstname varchar(30), lastname varchar(30) ,username varchar(30),
 		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade ,check (length(nationalcode) = 10));
 
+
+create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
+--
+-- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
+-- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
+
+-- //UserPhone
 
 create table Address (postalCode char(10), state varchar(12), city varchar(12), street varchar(12), vallay varchar(12), plate integer,
 		      floor integer, primary key (postalCode), check (length(postalCode) = 10));
@@ -19,13 +25,6 @@ create table StoreStatus (tdate date, poroductsQty integer, sellQty integer, pri
 
 
 
-
-create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
---
--- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
--- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
-
--- //UserPhone
 create table UserPhone(nationalCode char(10), phoneNo integer, primary key(nationalCode, phoneNo), foreign key(nationalCode) references usersite(nationalCode));
 
 -- //Notification
@@ -96,21 +95,23 @@ create table Purchase(nationalCode char(10), orderId char(10), productId char(10
 	 primary key(nationalCode, orderId, productId),
 	 foreign key(nationalCode) references Client(nationalCode), foreign key(orderId) references Orders(orderId),
 	 foreign key(productId) references Product(productId), check(productQty>=0));
+
+
 	 
 create view ClientAddressView as (select nationalCode, firstname, lastname, postalCode, state, city, street, vallay, plate, floor 
-				  from (clientaddress natural join address) natural join usersite)
+				  from (clientaddress natural join address) natural join usersite);
 
 
 create view ClientUser as (select nationalCode, wallet, firstName, lastName, username 
-			   from client natural join usersite)
+			   from client natural join usersite);
 
 
 create view OrderAddress as (select OrderId, postalCode, state, city, street, vallay, plate, floor
-			     from orders natural join address)
+			     from orders natural join address);
 
 
 create view ManagerUser as (select nationalCode, workHour, startDate , salary , firstName, lastName, username
-			    from manager natural join usersite)
+			    from manager natural join usersite);
 
 create view deliveryManUser as
   select usersite.nationalCode,deliveryMan.capacity, deliveryMan.plateNo, deliveryMan.vehicleType, deliveryMan.salary, deliveryMan.workHour, deliveryMan.startDate, usersite.firstName, usersite.lastName, usersite.username
@@ -188,7 +189,7 @@ execute procedure updateClientAddressProc();
 create or replace function updateClientUserProc() returns trigger as $psql$
 begin
   update client set wallet = new.wallet where client.nationalCode = old.nationalCode;
-  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  update usersite set firstname = new.firstname, lastName = new.lastName where usersite.nationalCode = old.nationalCode;
   return old;
 end;
 $psql$ language plpgsql;
@@ -202,7 +203,7 @@ execute procedure updateClientUserProc();
 create or replace function updateManagerUserProc() returns trigger as $psql$
 begin
   update manager set salary = new.salary, workHour = new.workHour, startDate = new.startDate where manager.nationalCode = old.nationalCode;
-  update user set firstname = new.firstname, lastName = new.lastName where user.nationalCode = old.nationalCode;
+  update usersite set firstname = new.firstname, lastName = new.lastName where usersite.nationalCode = old.nationalCode;
   return old;
 end;
 $psql$ language plpgsql;
@@ -265,7 +266,7 @@ $psql$ language plpgsql;
 create trigger insertLoadProductUpdateProductQty
 after insert on loadProduct
 for each row
-execute procedure insertLoadP
+execute procedure insertLoadProductUpdateProductQtyProc();
 
 create or replace function updateDeliveryManUserProc() returns trigger as $psql$
 begin
@@ -345,6 +346,7 @@ create trigger insertDeliveryUpdateOrderStatus
   after insert on delivery
   for each row
   execute procedure insertDeliveryUpdateOrderStatusProc();
+
 
 
 

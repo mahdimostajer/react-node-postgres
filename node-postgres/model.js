@@ -1333,6 +1333,170 @@ const createDelivery = (body) => {
   });
 };
 
+const updateProductCategory = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { photo } = body;
+    pool.query(
+      "update productcategory set photo = $1",
+      [photo],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`productCategory has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateProduct = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { name, price, qty, photo1, photo2, photo3, photo4, photo5, manufacturedate, expirationdate, categoryname } = body;
+    pool.query(
+      "update product set name = $1, price = $2, qty = $3, photo1 = $4, photo2 = $5, photo3 = $6, photo4 = $7, photo5 = $8, manufactureDate = $9, expirationDate = $10, categoryName = $11",
+      [name, price, qty, photo1, photo2, photo3, photo4, photo5, manufacturedate, expirationdate, categoryname],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`product has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateComment = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { text, time, productid, nationalcode } = body;
+    pool.query(
+      "update comment set text = $1, time = $2, productId = $3, nationalCode = $4 ",
+      [text, time, productdd, nationalcode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`comment has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateLoad = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { date, nationalcode } = body;
+    pool.query(
+      "update load set date = $1, nationalcode = $2",
+      [date, nationalcode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`load has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updatePurchase = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { productqty } = body;
+    pool.query(
+      "update purchase set productqty = $1",
+      [productqty],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`purchase has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateDiscount = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalcode, amount, max, enddate } = body;
+    pool.query(
+      "update discount set nationalCode = $1, amount = $2, max = $3, endDate = $4 ",
+      [nationalcode, amount, max, enddate],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`discount has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateDeliveryManUser = (body) => {
+  return new Promise(function (resolve, reject) {
+    const {  capacity, plateNo, vehicleType ,salary, workHour, startDate, firstName, lastName, username } = body;
+    pool.query(
+      "update deliveryManUser set capacity = $1, plateNo = $2, vehicleType = $3 ,salary = $4, workHour = $5, startDate = $6, firstName = $7, lastName = $8, username = $9 ",
+      [ capacity, plateNo, vehicleType ,salary, workHour, startDate, firstName, lastName, username],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`deliveryManUser has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateProductComment = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { nationalCode, productName,text, time } = body;
+    pool.query(
+      "update ProductComment set nationalCode = $1, productName = $2, text = $3, time = $4 ",
+      [nationalCode, productName,text, time],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`ProductComment has been updated`);
+        }
+      }
+    );
+  });
+};
+
+const updateClientOrder = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { description, status, price, buyDate, firstName, lastName } = body;
+    pool.query(
+      "update ClientOrder set description = $1, status = $2, price = $3, buyDate = $4, firstName = $5, lastName = $6 ",
+      [description, status, price, buyDate, firstName, lastName],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(`ClientOrder has been updated`);
+        }
+      }
+    );
+  });
+};
+
+
+
 module.exports = {
   getUsers,
   createUser,
@@ -1409,4 +1573,13 @@ module.exports = {
   getDelivery,
   deleteDelivery,
   createDelivery,
+  updateProductCategory,
+  updateProduct,
+  updateComment,
+  updateLoad,
+  updatePurchase,
+  updateDiscount,
+  updateDeliveryManUser,
+  updateProductComment,
+  updateClientOrder,
 };
