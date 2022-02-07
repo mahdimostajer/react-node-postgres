@@ -1,10 +1,16 @@
 ```sql
 create table LoginInfo (username varchar(30), password varchar(30), primary key(username),check (length(password) > 8));
 
-
 create table usersite (nationalcode char(10), firstname varchar(30), lastname varchar(30) ,username varchar(30),
 		       primary key(nationalcode), foreign key(username) references logininfo(username) on update cascade on delete cascade ,check (length(nationalcode) = 10));
 
+
+create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
+--
+-- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
+-- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
+
+-- //UserPhone
 
 create table Address (postalCode char(10), state varchar(12), city varchar(12), street varchar(12), vallay varchar(12), plate integer,
 		      floor integer, primary key (postalCode), check (length(postalCode) = 10));
@@ -19,13 +25,6 @@ create table StoreStatus (tdate date, poroductsQty integer, sellQty integer, pri
 
 
 
-
-create table Client(nationalCode char(10), wallet integer, primary key (nationalCode), foreign key(nationalCode) references usersite(nationalCode), check (wallet >= 0));
---
--- create table Client (nationalcode char(10), wallet integer, primary key(nationalcode),
--- 					 foreign key (nationalcode) references usersite(nationalcode) on update cascade on delete cascade, check (wallet >= 0));
-
--- //UserPhone
 create table UserPhone(nationalCode char(10), phoneNo integer, primary key(nationalCode, phoneNo), foreign key(nationalCode) references usersite(nationalCode));
 
 -- //Notification
@@ -96,6 +95,8 @@ create table Purchase(nationalCode char(10), orderId char(10), productId char(10
 	 primary key(nationalCode, orderId, productId),
 	 foreign key(nationalCode) references Client(nationalCode), foreign key(orderId) references Orders(orderId),
 	 foreign key(productId) references Product(productId), check(productQty>=0));
+
+
 	 
 create view ClientAddressView as (select nationalCode, firstname, lastname, postalCode, state, city, street, vallay, plate, floor 
 				  from (clientaddress natural join address) natural join usersite);
