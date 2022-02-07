@@ -569,10 +569,10 @@ const createLoadProduct = (body) => {
 
 const createPurchase = (body) => {
   return new Promise(function (resolve, reject) {
-    const { nationalCode, orderId, productid, productQTY } = body;
+    const { nationalcode, orderid, productid, productqty } = body;
     pool.query(
-      "Insert into product (nationalCode, orderId, productid ,productQTY) values ($1, $2, $3, $4)",
-      [nationalCode, orderId, productid, productQTY],
+      "Insert into purchase (nationalcode, orderid, productid, productqty) values ($1, $2, $3, $4)",
+      [nationalcode, orderid, productid, productqty],
       (error, results) => {
         if (error) {
           reject(error);
@@ -799,6 +799,68 @@ const createOrder = (body) => {
   });
 };
 
+const getClientDiscount = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM clientdiscount", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
+const deleteClientDiscount = (discountid, nationalcode) => {
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      "DELETE FROM clientdiscount WHERE discountid = $1 and nationalcode = $2",
+      [discountid, nationalcode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(`clientdiscount deleted with username: ${discountid}`);
+        }
+      }
+    );
+  });
+};
+
+const createClientDiscount = (body) => {
+  return new Promise(function (resolve, reject) {
+    const { discountid, nationalcode } = body;
+    pool.query(
+      "INSERT INTO clientdiscount (discountid, nationalcode) VALUES ($1, $2);",
+      [discountid, nationalcode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+          console.log(error);
+        } else {
+          resolve(
+            `A new clientdiscount has been added: ${JSON.stringify(
+              results.rows[0]
+            )}`
+          );
+        }
+      }
+    );
+  });
+};
+
+const getOrderAddress = () => {
+  return new Promise(function (resolve, reject) {
+    pool.query("SELECT * FROM orderaddress", (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.rows);
+      }
+    });
+  });
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -847,4 +909,8 @@ module.exports = {
   getOrder,
   deleteOrder,
   createOrder,
+  getClientDiscount,
+  deleteClientDiscount,
+  createClientDiscount,
+  getOrderAddress,
 };

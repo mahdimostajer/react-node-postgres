@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Table, Modal } from "antd";
-import OrderForm from "./Form";
+import PurchaseForm from "./Form";
 
-export default function Order() {
-  const [order, setOrder] = useState();
+export default function Purchase() {
+  const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -11,19 +11,22 @@ export default function Order() {
   }, []);
 
   function getData() {
-    fetch("http://localhost:3001/order")
+    fetch("http://localhost:3001/purchase")
       .then((response) => {
         return response.text();
       })
       .then((data) => {
-        setOrder(JSON.parse(data));
+        setData(JSON.parse(data));
       });
   }
 
-  function deleteItem(id) {
-    fetch(`http://localhost:3001/order/${id}`, {
-      method: "DELETE",
-    })
+  function deleteItem(nationalcode, orderid, productid) {
+    fetch(
+      `http://localhost:3001/purchase/${nationalcode}/${orderid}/${productid}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         return response.text();
       })
@@ -34,7 +37,7 @@ export default function Order() {
   }
 
   function createItem(data) {
-    fetch("http://localhost:3001/order", {
+    fetch("http://localhost:3001/purchase", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,50 +55,36 @@ export default function Order() {
 
   const columns = [
     {
-      title: "orderid",
-      dataIndex: "orderid",
-      key: "orderid",
-    },
-    {
       title: "nationalcode",
       dataIndex: "nationalcode",
       key: "nationalcode",
     },
     {
-      title: "status",
-      dataIndex: "status",
-      key: "status",
+      title: "orderid",
+      dataIndex: "orderid",
+      key: "orderid",
     },
     {
-      title: "price",
-      dataIndex: "price",
-      key: "price",
+      title: "productid",
+      dataIndex: "productid",
+      key: "productid",
     },
     {
-      title: "buydate",
-      dataIndex: "buydate",
-      key: "buydate",
-    },
-    {
-      title: "postalcode",
-      dataIndex: "postalcode",
-      key: "postalcode",
-    },
-    {
-      title: "discountid",
-      dataIndex: "discountid",
-      key: "discountid",
-    },
-    {
-      title: "description",
-      dataIndex: "description",
-      key: "description",
+      title: "productqty",
+      dataIndex: "productqty",
+      key: "productqty",
     },
     {
       title: "delete",
       key: "delete",
       render: (text, record) => (
-        <Button onClick={() => deleteItem(record.orderid)}>delete</Button>
+        <Button
+          onClick={() =>
+            deleteItem(record.nationalcode, record.orderid, record.productid)
+          }
+        >
+          delete
+        </Button>
       ),
     },
   ];
@@ -107,19 +96,19 @@ export default function Order() {
         type="primary"
         onClick={() => setVisible(true)}
       >
-        add order
+        add purchase
       </Button>
       <Modal
         style={{
           top: 20,
         }}
-        title="new order"
+        title="new purchase"
         width={576}
         visible={visible}
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <OrderForm
+        <PurchaseForm
           visible={visible}
           onSubmit={(data, resetForm) => {
             createItem(data);
@@ -128,7 +117,7 @@ export default function Order() {
           }}
         />
       </Modal>
-      <Table columns={columns} dataSource={order} />
+      <Table columns={columns} dataSource={data} />
     </div>
   );
 }

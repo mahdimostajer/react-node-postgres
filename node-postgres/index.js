@@ -537,6 +537,50 @@ app.post("/order", (req, res) => {
     });
 });
 
+app.get("/clientdiscount", (req, res) => {
+  model
+    .getClientDiscount()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.delete("/clientdiscount/:discountid/:nationalcode", (req, res) => {
+  model
+    .deleteClientDiscount(req.params.discountid, req.params.nationalcode)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.post("/clientdiscount", (req, res) => {
+  model
+    .createClientDiscount(req.body)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
+app.get("/orderaddress", (req, res) => {
+  model
+    .getOrderAddress()
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+});
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });

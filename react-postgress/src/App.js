@@ -18,6 +18,12 @@ import Discount from "./discount/Discount";
 import UserPhone from "./userPhone/UserPhone";
 import ManagerUser from "./managerUser/ManagerUser";
 import Order from "./order/Order";
+import ClientDiscount from "./clientDiscount/ClientDiscount";
+import Purchase from "./purchase/Purchase";
+import OrderAddress from "./orderAddress/OrderAddress";
+import ProductComment from "./productComment/ProductComment";
+import UserOrder from "./userOrder/UserOrder";
+import DeliveryManUser from "./deliveryManUser/DeliveryManUser";
 
 function App() {
   const location = useLocation();
@@ -58,6 +64,9 @@ function App() {
         <Menu.Item key="/order">
           <Link to="/order">Order</Link>
         </Menu.Item>
+        <Menu.Item key="/purchase">
+          <Link to="/purchase">Purchase</Link>
+        </Menu.Item>
         <Menu.Item key="/productcategory">
           <Link to="/productcategory">Product Category</Link>
         </Menu.Item>
@@ -76,6 +85,9 @@ function App() {
         <Menu.Item key="/discount">
           <Link to="/discount">Discount</Link>
         </Menu.Item>
+        <Menu.Item key="/clientdiscount">
+          <Link to="/clientdiscount">Client Discount</Link>
+        </Menu.Item>
         <Menu.Item key="/clientuser">
           <Link to="/clientuser">Client User View</Link>
         </Menu.Item>
@@ -84,6 +96,18 @@ function App() {
         </Menu.Item>
         <Menu.Item key="/manageruser">
           <Link to="/manageruser">Manager User View</Link>
+        </Menu.Item>
+        <Menu.Item key="/orderaddress">
+          <Link to="/orderaddress">Order Address View</Link>
+        </Menu.Item>
+        <Menu.Item key="/productcomment">
+          <Link to="/productcomment">Product Comment View</Link>
+        </Menu.Item>
+        <Menu.Item key="/userorder">
+          <Link to="/userorder">User Order View</Link>
+        </Menu.Item>
+        <Menu.Item key="/deliveryManUser">
+          <Link to="/deliveryManUser">DeliveryMan User View</Link>
         </Menu.Item>
       </Menu>
       <div style={{ marginLeft: "300px" }}>
@@ -124,11 +148,20 @@ function App() {
           <Route exact path="/load">
             <Load />
           </Route>
+          <Route exact path="/purchase">
+            <Purchase />
+          </Route>
           <Route exact path="/loadproduct">
             <LoadProduct />
           </Route>
+          <Route exact path="/deliveryManUser">
+            <DeliveryManUser />
+          </Route>
           <Route exact path="/discount">
             <Discount />
+          </Route>
+          <Route exact path="/clientdiscount">
+            <ClientDiscount />
           </Route>
           <Route exact path="/userphone">
             <UserPhone />
@@ -138,6 +171,15 @@ function App() {
           </Route>
           <Route exact path="/order">
             <Order />
+          </Route>
+          <Route exact path="/orderaddress">
+            <OrderAddress />
+          </Route>
+          <Route exact path="/productcomment">
+            <ProductComment />
+          </Route>
+          <Route exact path="/userorder">
+            <UserOrder />
           </Route>
           <Route path="/">
             <Redirect to="/user" />
