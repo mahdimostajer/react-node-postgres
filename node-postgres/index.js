@@ -216,7 +216,7 @@ app.delete("/manager/:nationalcode", (req, res) => {
 
 app.post("/manager", (req, res) => {
   model
-    .createManger(req.body)
+    .createManager(req.body)
     .then((response) => {
       res.status(200).send(response);
     })
